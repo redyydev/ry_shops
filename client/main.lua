@@ -1,6 +1,4 @@
-
-
-Local Framework = nil
+local Framework = nil
 
 if Config.Framework == "qb-core" then
     Framework = exports['qb-core']:GetCoreObject()
