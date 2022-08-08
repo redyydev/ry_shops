@@ -1,5 +1,8 @@
 Config = {}
 
+
+Config.Framework = "qb-core"        -- "esx" or "qb-core"
+
 Config.Options = {
     ['purchase_complete'] = "Successfully Purchased, thank you!",
     ['no_money'] = "You don't have enought money."
