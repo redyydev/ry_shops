@@ -1,7 +1,7 @@
 Config = {}
 
 
-Config.Framework = "qb-core"        -- "esx" or "qb-core"
+Config.Framework = "esx"        -- "esx" or "qb-core"
 
 Config.Options = {
     ['purchase_complete'] = "Successfully Purchased, thank you!",
