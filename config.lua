@@ -1,5 +1,4 @@
 Config = {}
-
 Config.Framework = "esx"        -- "esx" or "qb-core"
 
 Config.Options = {
