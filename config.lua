@@ -27,8 +27,11 @@ Config.Locations = {
 Config.Products = {
     [1] = {
         name = "Apple", -- name in the menu
-        item = "apple", -- item name in database
+        item = "apple", -- item name in database *remember that you need the item in database to work 100%*
         image = "apple.png", -- image of product in html/assets
+        -- IMAGE RESOLUTION --
+        -- 150x100 Pixels --
+        -- IMAGE RESOLUTION --
         price = 1, -- price of product
         available = true, -- if is available to buy it or not
         type = "item" -- item or weapon
