@@ -18,16 +18,36 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.1.1/howler.min.js" type="text/javascript"></script>
     <div class="ui" style="display: none;">
       <div class="notification"></div>
+      <div class="banner">
+        <div class="left">
+          <div class="title" id="title_principal">
+            <h1>SUPERMARKET</h1>
+          </div>
+          <div class="wallet">
+            <div class="icon">
+              <i class="bi bi-basket"></i> 
+            </div>
+            <div class="details" >
+              <div class="title">Total</div>
+              <div class="count" id="pay">0$</div>
+            </div>
+            <div class="exit" onclick="closeMenu()"><i class="bi bi-x-circle"></i></div>
+          </div>
+        </div>
+      </div>
       <div class="content">
         <div class="products">
           <div class="products-title">Products</div>
         </div>
-        <div class="basket">
-          <div class="basket-title"><i class="bi bi-basket"></i> Shopping BASKET</div>
-        </div>
-        <div class="buttons" >
-          <button id="pay">Checkout (0$)</button>
-        </div>
+        <div class="basket"></div>
+      </div>
+      <div class="checkout">
+        <button id="checkout">checkout</button>
+        <button id="checkout-out" style="display: none;">Cancel</button>
+      </div>
+      <div class="payout" style="display: none;">
+        <div class="cash" id="cash"><i class="bi bi-cash-stack"  style="font-size: 1.7em;"></i></div>
+        <div class="bank" id="bank"><i class="bi bi-credit-card" style="font-size: 1.7em;"></i></div>
       </div>
     </div>
 </body>

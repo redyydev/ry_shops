@@ -30,27 +30,27 @@ body, input, button {
 }
 
 .content {
-  width: 1340px;
+  width: 640px;
   background-color: rgba(17, 25, 40, 0.71);
   transition: all 0.2s ease 0s;
   box-shadow: 2px 5px 10px 0 rgba(0,0,0,0.20);
   z-index: 9999999;
-  border-radius: 7px;
+  border-radius: 5px;
   position: fixed;
-  left: 50%;
+  left: 47%;
   top: 50%;
   transform: translate(-50%, -50%);
 }
 
 .notification {
   position: absolute;
-  border-radius: 15px;
+  border-radius: 5px;
   text-align: center;
   min-width: 200px;
   max-width: 450px;
   background-color: rgba(17, 25, 40, 0.71);
   box-shadow: 2px 5px 10px 0 rgba(0,0,0,0.20);
-  top: 19%;
+  top: 18%;
   right: -15%;
   padding: 15px;
   color: white;
@@ -59,24 +59,158 @@ body, input, button {
   transition: right 0.4s ease 0s;
 }
 
-.basket{
-  margin-top: 20px;
-  width: 25%;
+.basket {
+  width: 100%;
+  border-radius: 5px;
+  background-color: rgba(17, 25, 40, 0.71);
+  transition: all 0.2s ease 0s;
+  box-shadow: 2px 5px 10px 0 rgba(0,0,0,0.20);
+  z-index: 9999999;
+  position: fixed;
+  left: 120%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   height: 500px;
-  overflow-y: scroll;
-  scroll-behavior: smooth;
-  float: right;
-  border-left: 2px solid rgba(128, 128, 128, 0.2);
-}
-
-.products{
-  margin-top: 20px;
-  width: 75%;
-  height: 510px;
+  padding: 5px;
+  max-width: 250px;
   overflow-y: scroll;
   overflow-x: hidden;
   scroll-behavior: smooth;
+}
+
+.checkout {
+  border-radius: 5px;
+  width: 250px;
+  background-color: rgba(17, 25, 40, 0.71);
+  transition: all 0.2s ease 0s;
+  box-shadow: 2px 5px 10px 0 rgba(0,0,0,0.20);
+  position: fixed;
+  left: 70.3%;
+  top: 76.25%;
+  transform: translate(-50%, -50%);
+  height: 60px;
+  border: 0;
+}
+
+.checkout:hover{
+  background-color: rgba(17, 25, 40, 0.8);
+}
+
+.checkout #checkout {
+  width: 100%;
+  height: 100%;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: center;
+  background: transparent;
+  border: 0;
+  color: #fff;
+  font-size: 15px;
+}
+
+.checkout #checkout-out {
+  width: 100%;
+  height: 100%;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: center;
+  background: transparent;
+  border: 0;
+  color: #fff;
+  font-size: 15px;
+}
+
+.banner {
+  width: 895px;
+  border-radius: 5px;
+  background-color: rgba(17, 25, 40, 0.71);
+  transition: all 0.2s ease 0s;
+  box-shadow: 2px 5px 10px 0 rgba(0,0,0,0.20);
+  z-index: 9999999;
+  position: fixed;
+  left: 53.65%;
+  top: 23.3%;
+  transform: translate(-50%, -50%);
+  height: 70px;
+}
+
+.banner .left {
   float: left;
+  width: 100%;
+}
+
+.banner .left .wallet {
+  width: 60px;
+  height: 70px;
+  float: right;
+  margin-top: -68px;
+  margin-right: 192px;
+  align-items: center;
+  text-align: center;
+}
+
+.banner .left .icon {
+  float: left;
+  padding: 5px;
+  margin-top: 20px;
+  opacity: 0.8;
+}
+.banner .left .details {
+  margin-top: -8px;
+  padding: 30px;
+}
+
+.banner .left .exit {
+  transition: all 0.2s ease 0s;
+  margin-top: -97px;
+  margin-left: 170px;
+  padding: 30px;
+  font-size: 2em;
+  opacity: 0.8;
+}
+
+.banner .left .exit:hover{
+  opacity: 1.0;
+}
+
+.banner .left .details .title {
+  font-size: 12px;
+  letter-spacing: 1px;
+  font-weight: bold;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+.banner .left .details .count {
+  letter-spacing: 1px;
+  font-weight: bold;
+}
+
+.banner .left h1 {
+  color: #fff;
+  letter-spacing: 1px;
+  padding: 17px;
+  text-transform: uppercase;
+}
+
+.products{
+  transition: all 0.2s ease 0s;
+  margin-top: 15px;
+  width: 100%;
+  height: 485px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+.payout{
+  width: 335px;
+  height: 60px;
+  transition: all 0.2s ease 0s;
+  z-index: 9999999;
+  position: fixed;
+  left: 60.1%;
+  top: 76.2%;
+  transform: translate(-50%, -50%);
 }
 
 .buttons {
@@ -84,7 +218,7 @@ body, input, button {
   height: 50px;
   float: right;
   padding: 5px;
-  border-left: 2px solid rgba(128, 128, 128, 0.2);
+  border-left: 2px solid   rgba(136, 136, 136, 0.2);
 }
 
 .buttons button {
@@ -113,19 +247,56 @@ body, input, button {
   background: rgba(61, 115, 197, 0.4);
 }
 
-.product {
-  display: inline-block;
-  width: 130px;
-  height: 130px;
-  background: rgba(87, 87, 87, 0.2);
-  margin-top: 1.5vw;
-  margin-left: 1.5vw;
+.payout .cash {
+  width: 35%;
+  height: 60px;
+  background-color: rgba(17, 25, 40, 0.71);
   border: 0;
   border-radius: 5px;
   box-shadow: 2px 5px 10px 0 rgba(0,0,0,0.20);
   transition: all 0.2s ease 0s;
-  margin-bottom: 5px;
+  float: left;
+  text-align: center;
+  padding: 15px;
+} 
+
+.payout .cash:hover{
+  background-color: rgba(17, 25, 40, 0.8);
 }
+
+.payout .bank:hover{
+  background-color: rgba(17, 25, 40, 0.8);
+}
+
+.payout .bank {
+  width: 35%;
+  height: 60px;
+  background-color: rgba(17, 25, 40, 0.71);
+  border: 0;
+  border-radius: 5px;
+  box-shadow: 2px 5px 10px 0 rgba(0,0,0,0.20);
+  transition: all 0.2s ease 0s;
+  padding: 15px;
+  text-align: center;
+  float: left;
+  margin-left: 2px;
+} 
+
+.product {
+  display: inline-block;
+  width: 130px;
+  height: 140px;
+  background: rgba(87, 87, 87, 0.2);
+  margin-bottom: 15px;
+  margin-left: 20px;
+  margin-top: 5px;
+  border: 0;
+  border-radius: 5px;
+  box-shadow: 2px 5px 10px 0 rgba(0,0,0,0.20);
+  transition: all 0.2s ease 0s;
+}
+
+
 
 .disabled {
   opacity: 0.5;
@@ -134,15 +305,19 @@ body, input, button {
 .product-basket {
   display: inline-block;
   width: 130px;
-  height: 130px;
+  height: 140px;
   background: rgba(87, 87, 87, 0.2);
-  margin-top: 1.5vw;
-  margin-left: 1.1vw;
   border: 0;
   border-radius: 5px;
   box-shadow: 2px 5px 10px 0 rgba(0,0,0,0.20);
   transition: all 0.2s ease 0s;
-  margin-bottom: 5px;
+  margin-left: 45px;
+  margin-bottom: 15px;
+  margin-top: 5px;
+}
+
+.product-basket:first-child {
+  margin-top: 15px;
 }
 
 .basket-clear-button {
@@ -152,11 +327,11 @@ body, input, button {
 }
 
 .product:hover{
-  background: rgba(87, 87, 87, 0.4);
+  background: rgba(136, 136, 136, 0.2);
 }
 
 .product-basket:hover{
-  background: rgba(87, 87, 87, 0.4);
+  background: rgba(136, 136, 136, 0.1);
 }
 
 .products .products-title {
@@ -214,12 +389,11 @@ body, input, button {
 }
 
 .product-basket .price {
-  min-width: 50px;
+  width: 90%;
   height: 20px;
-  background: rgba(19, 155, 60, 0.7);
+  background: rgba(19, 155, 60, 0.8);
   box-shadow: 2px 5px 10px 0 rgba(0,0,0,0.20);
   margin-top: -20px;
-  margin-left: 70px;
   border-radius: 5px;
   color: #fff;
   transition: all 0.2s ease 0s;
@@ -238,19 +412,20 @@ body, input, button {
 }
 
 .product-basket .footer{
-  margin-top: 60px;
-  min-width: 90%;
+  margin-top: 70px;
+  width: 100%;
   height: 25%;
   margin-bottom: 5px;
-  max-width: 90%;
   text-align: left;
   padding: 5px;
+  max-width: 120px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .product-basket .footer .footer-title{
-  font-weight: bold;
   font-size: 15px;
-  letter-spacing: 1px;
   margin-left: 5px;
 } 
 
@@ -291,20 +466,29 @@ body, input, button {
 .product .price {
   min-width: 50px;
   height: 20px;
-  background: rgba(170, 170, 170, 0.7);
-  box-shadow: 2px 5px 10px 0 rgba(0,0,0,0.20);
-  margin-top: -20px;
-  margin-left: 75px;
-  border-radius: 5px;
   color: #fff;
   transition: all 0.2s ease 0s;
-  font-size: 14px;
-  text-align: center;
+  font-size: 13px;
+  text-align: left;
   text-transform: uppercase;
   max-width: 100px;
-  padding: 2px;
+  margin-left: -5px;
+  margin-top: -5px;
+  float: left;
 }
 
+#basket-count {
+  position: absolute;
+  margin-top: 10px;
+  font-size: 13px;
+  margin-left: -5px;
+}
+
+.product .image {
+  width: 100%;
+  height: 30%;
+  margin-top: 25px
+}
 
 .product .image img{
   margin: 0 auto;
@@ -313,19 +497,22 @@ body, input, button {
 }
 
 .product .footer{
-  margin-top: 60px;
-  width: 90%;
+  margin-top: 70px;
+  width: 100%;
   height: 25%;
   margin-bottom: 5px;
   text-align: left;
   padding: 5px;
+  max-width: 120px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .product .footer .footer-title{
-  font-weight: bold;
   font-size: 15px;
-  letter-spacing: 1px;
   margin-left: 5px;
+  font-weight: lighter;
 } 
 
 .product .footer .footer-price{

@@ -23,7 +23,7 @@ Citizen.CreateThread(function()
                         sleep = false
                         DrawText3D(v.coords.x, v.coords.y, v.coords.z + 0.25, v.marker.text)
                         if IsControlJustReleased(0, v.marker.key) then
-                            open_ui()
+                            open_ui(k, v.shop_name)
                         end
                     end
 

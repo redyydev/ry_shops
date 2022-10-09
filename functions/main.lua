@@ -1,12 +1,12 @@
-function open_ui()
+function open_ui(nameshop, shop_name)
 	local products = {}
 
-	for k,v in pairs(Config.Products) do 
+	for k,v in pairs(Config.Locations[nameshop].products) do 
 		table.insert(products, {id= k, name = v.name, price = v.price, item = v.item, available = v.available, type = v.type, image = v.image})
 	end
 
 	TriggerScreenblurFadeIn(1)
-	SendNUIMessage({action = 'open', content = { products = products }})
+	SendNUIMessage({action = 'open', content = { products = products, shop_name = shop_name }})
 	SetNuiFocus(true, true)
 
 	InMenu = true

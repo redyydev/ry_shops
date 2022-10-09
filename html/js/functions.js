@@ -1,7 +1,11 @@
-function main_menu(products){
+var checkout = false
+var in_checkout = false
+
+function main_menu(products, shop_name){
   $(".ui").fadeIn();
   $(".products").html('')
 
+  $("#title_principal").html(`<h1>${shop_name}</h1>`)
   $.each(products, function(index, product) {
     if (product.available) {
       $(".products").append(`
@@ -32,45 +36,66 @@ function main_menu(products){
       </div>
       `);
     }
-
-
     $(`#product-${product.id}`).click(function () {
+    if (!in_checkout) {
       if (product.available) {
         addBasket(product.id, product.name, product.item, product.image, product.price, product.type);
       } else {
         unsuccessfully(`#product-${product.id}`);
       }
+    } else {
+      unsuccessfully(`#product-${product.id}`);
+    }  
     })
 
   })
-  $(`#pay`).click(function() {
-    checkout()
+  $(`#checkout`).click(function() {
+    $(`#checkout`).hide();
+    $(`#checkout-out`).show();
+    $(".basket").css("opacity", "0.7")
+    $(".content").css("opacity", "0.7")
+    $(".payout").show();
+    in_checkout = true
+    checkout_btn();
+  })
+  $(`#checkout-out`).click(function() {
+    $(`#checkout-out`).hide();
+    $(`#checkout`).show();
+    $(".basket").css("opacity", "1.0")
+    $(".content").css("opacity", "1.0")
+    $(".payout").hide();
+    in_checkout = false
   })
 }
 
-function checkout() {
-  if (basket.length >= 1) {
-    $.each(basket, function(index, product) {
-      $.post('https://ry_shops/checkout', JSON.stringify({
-          name: product.name,
-          item: product.item,
-          quantity: product.quantity,
-          total: product.total,
-          type: product.type
-      }));
-      closeMenu();
-    })
-  } else {
-    notification('Basket is Empty')
-  }
-}
-
-function clean() {
-  basket = []
-  total = 0
-  $(".basket").html('')
-  $(".basket").append('<div class="basket-title"><i class="bi bi-basket"></i> Shopping BASKET</div>')
-  $("#pay").html(`Checkout (0$)`);
+function checkout_btn() {
+      $(`#cash`).click(function() {
+        $.each(basket, function(index, product) {
+          $.post('https://ry_shops/checkout', JSON.stringify({
+              name: product.name,
+              item: product.item,
+              quantity: product.quantity,
+              total: product.total,
+              type: product.type,
+              payment: 'cash'
+          }));
+          closeMenu();
+        });
+      });
+  
+      $(`#bank`).click(function() {
+        $.each(basket, function(index, product) {
+          $.post('https://ry_shops/checkout', JSON.stringify({
+              name: product.name,
+              item: product.item,
+              quantity: product.quantity,
+              total: product.total,
+              type: product.type,
+              payment: 'bank'
+          }));
+          closeMenu();
+        });
+      });
 }
 
 function addBasket(id, name, itema, image, price, type) {
@@ -83,7 +108,7 @@ function addBasket(id, name, itema, image, price, type) {
           item.total = item.total + price;
           total = total + price;
       
-          $("#pay").html(`Checkout (${total}$)`);
+          $("#pay").html(`${total}$`);
       
           $(`#basket-${item.id}`).html('');
           $(`#basket-${item.id}`).append(`
@@ -91,10 +116,11 @@ function addBasket(id, name, itema, image, price, type) {
                 <div class="price">${item.total}$</div>
                 <div class="image">
                   <img src="assets/${item.image}" alt="${item.image}">
+                  <span id="basket-count">x${item.quantity}</span>
                 </div>
               </div>
           <div class="footer">
-            <div class="footer-title">${item.name} x${item.quantity}</div>
+            <div class="footer-title">${item.name}</div>
           </div>
           `);
           success(`#basket-${item.id}`);
@@ -103,7 +129,7 @@ function addBasket(id, name, itema, image, price, type) {
     basket.push({id: id, name: name, item: itema, image: image, quantity: 1, total: price, price: price, type: type});
 
     total = total + price;
-    $("#pay").html(`Checkout (${total}$)`);
+    $("#pay").html(`${total}$`);
 
     $(".basket").append(`
     <div class="product-basket" id="basket-${id}">
@@ -111,10 +137,11 @@ function addBasket(id, name, itema, image, price, type) {
           <div class="price">${price}$</div>
           <div class="image">
             <img src="assets/${image}" alt="${image}">
+            <span id="basket-count">${type == 'weapon' ? "" : 'x1'}</span>
           </div>
         </div>
         <div class="footer">
-        <div class="footer-title">${name} ${type == 'weapon' ? "" : 'x1'}</div>
+        <div class="footer-title">${name}</div>
         </div>
     </div>
     `);
@@ -128,38 +155,56 @@ function addBasket(id, name, itema, image, price, type) {
 function basket_product(id){
   var item = basket.find(product => product.id === id);
   if (item) {
-    item.quantity = item.quantity - 1;
-    item.total = item.total - item.price;
-    total = total - item.price;
-
-    if (basket.length == 0) {
-      $("#pay").html(`Checkout (0$)`);
-    } else {
-      $("#pay").html(`Checkout (${total}$)`);
-    }
-
-    if (item.quantity == 0) {
-      var index = basket.indexOf(item);
-      basket.splice(index, 1);
-      
-      $(`#basket-${item.id}`).remove();
-    } else {
-      $(`#basket-${item.id}`).html('')
-      $(`#basket-${item.id}`).append(`
-        <div class="header">
-            <div class="price">${item.total}$</div>
-            <div class="image">
-              <img src="assets/${item.image}" alt="${item.image}">
-            </div>
-        </div>
-        <div class="footer">
-          <div class="footer-title">${item.name} x${item.quantity}</div>
-        </div>
-      `);
-      unsuccessfully(`#basket-${item.id}`);
+    if (!in_checkout) {
+      item.quantity = item.quantity - 1;
+      item.total = item.total - item.price;
+      total = total - item.price;
+  
+      if (basket.length == 0) {
+        $("#pay").html(`0$`);
+      } else {
+        $("#pay").html(`${total}$`);
+      }
+  
+      if (item.quantity == 0) {
+        var index = basket.indexOf(item);
+        basket.splice(index, 1);
+        
+        $(`#basket-${item.id}`).remove();
+      } else {
+        $(`#basket-${item.id}`).html('')
+        $(`#basket-${item.id}`).append(`
+          <div class="header">
+              <div class="price">${item.total}$</div>
+              <div class="image">
+                <img src="assets/${item.image}" alt="${item.image}">
+                <span id="basket-count">x${item.quantity}</span>
+              </div>
+          </div>
+          <div class="footer">
+            <div class="footer-title">${item.name}</div>
+          </div>
+        `);
+        unsuccessfully(`#basket-${item.id}`);
+      }
     }
   }
 }
+
+function clean() {
+  basket = []
+  total = 0
+  in_checkout = false
+
+  $(".basket").html('');
+  $("#pay").html(`0$`);
+  $(`#checkout-out`).hide();
+  $(`#checkout`).show();
+  $(".basket").css("opacity", "1.0")
+  $(".content").css("opacity", "1.0")
+  $(".payout").hide();
+}
+
 
 function success(id){
   $(`${id}`).css("background", "rgba(74, 214, 39, 0.2)");
@@ -172,11 +217,11 @@ function unsuccessfully(id){
 }
 function notification(text) {
     $(".notification").fadeIn();
-    $(".notification").css("right", "15%");
+    $(".notification").css("right", "5%");
     $(".notification").html(`<i class="bi bi-bell"></i> ${text}`);
     setTimeout(function() {
       $(".notification").fadeOut();
-  }, 2000)
+  }, 3000)
 }
 
 function closeMenu() {
