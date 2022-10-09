@@ -50,13 +50,17 @@ function main_menu(products, shop_name){
 
   })
   $(`#checkout`).click(function() {
-    $(`#checkout`).hide();
-    $(`#checkout-out`).show();
-    $(".basket").css("opacity", "0.7")
-    $(".content").css("opacity", "0.7")
-    $(".payout").show();
-    in_checkout = true
-    checkout_btn();
+    if (basket.length >= 1) {
+      $(`#checkout`).hide();
+      $(`#checkout-out`).show();
+      $(".basket").css("opacity", "0.7")
+      $(".content").css("opacity", "0.7")
+      $(".payout").show();
+      in_checkout = true
+      checkout_btn();
+    } else {
+      notification('Basket is Empty.')
+    }
   })
   $(`#checkout-out`).click(function() {
     $(`#checkout-out`).hide();
