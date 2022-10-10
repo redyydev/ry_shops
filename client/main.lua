@@ -1,3 +1,6 @@
+InMenu = false
+sleep = true
+
 local Framework = nil
 
 if Config.Framework == "qb-core" then
@@ -5,10 +8,6 @@ if Config.Framework == "qb-core" then
 elseif Config.Framework == "esx" then
     Framework = exports['es_extended']:getSharedObject()
 end
-
-
-InMenu = false
-sleep = true
 
 Citizen.CreateThread(function()
     while true do 

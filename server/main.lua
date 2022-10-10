@@ -14,7 +14,7 @@ AddEventHandler('ry_shops:checkout', function(name, item, quantity, total, tipo,
 		local xPlayer = Framework.Functions.GetPlayer(_source)
 
 		if (payment == 'cash') then
-			local Money = Player.PlayerData.money["cash"]
+			local Money = xPlayer.PlayerData.money["cash"]
 
 			if Money >= total then 
 				xPlayer.Functions.RemoveMoney("cash", tonumber(total))
@@ -28,7 +28,7 @@ AddEventHandler('ry_shops:checkout', function(name, item, quantity, total, tipo,
 				TriggerClientEvent("QBCore:Notify", _source, Config.Options['no_money']);
 			end
 		elseif (payment == 'bank') then
-			local Money = Player.PlayerData.money["bank"]
+			local Money = xPlayer.PlayerData.money["bank"]
 
 			if Money >= total then 
 				xPlayer.Functions.RemoveMoney("bank", tonumber(total))
