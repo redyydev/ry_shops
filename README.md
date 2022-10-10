@@ -1,4 +1,4 @@
-# ry_shops
+# RY_SHOPS
 
 ![alt text](https://imgur.com/hXO49YI.png)
 
@@ -6,3 +6,4 @@
 
 - Change the name of the folder to ry_shops or it won't work
 - For best usage please use 150x100 Pixels in images.
+- Do not use this script to make money, if you use it for personal use, please give the credits.
