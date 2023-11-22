@@ -1,78 +1,69 @@
-local Framework = nil
+Framework = nil
 
-if Config.Framework == "qb-core" then
+if RY.Options.FrameWork == 'esx' then
+    Framework = exports['es_extended']:getSharedObject()   
+elseif RY.Options.FrameWork == 'qb' then
     Framework = exports['qb-core']:GetCoreObject()
-elseif Config.Framework == "esx" then
-    Framework = exports['es_extended']:getSharedObject()
 end
 
-RegisterServerEvent('ry_shops:checkout')
-AddEventHandler('ry_shops:checkout', function(name, item, quantity, total, tipo, payment)
+RegisterServerEvent('ry-shops:checkout')
+AddEventHandler('ry-shops:checkout', function(itemName, itemQuantity, itemTotal, payment)
 	local _source = source
+    local xPlayer = nil
+    local playerMoney = 0
 
-	if Config.Framework == "qb-core" then
-		local xPlayer = Framework.Functions.GetPlayer(_source)
+    if RY.Options.FrameWork == 'esx' then
+        xPlayer = Framework.GetPlayerFromId(_source)
+        if xPlayer ~= nil then
+            if payment == 'cash' then
+                playerMoney = xPlayer.getAccount('money').money
+    
+                if playerMoney >= tonumber(itemTotal) then 
+                    xPlayer.removeMoney(tonumber(itemTotal))
+                    xPlayer.addInventoryItem(itemName, itemQuantity)
+                    TriggerClientEvent('ry-shops:notification', _source, RY.Messages.purchaseCompleted)
+                else
+                    TriggerClientEvent('ry-shops:notification', _source, RY.Messages.noMoney)
+                end
+            elseif payment == 'bank' then
+                playerMoney = xPlayer.getAccount('bank').money
+                
+                if playerMoney >= tonumber(itemTotal) then 
+                    xPlayer.removeAccountMoney('bank', tonumber(itemTotal))
+                    xPlayer.addInventoryItem(itemName, itemQuantity)
+                    TriggerClientEvent('ry-shops:notification', _source, RY.Messages.purchaseCompleted)
+                else
+                    TriggerClientEvent('ry-shops:notification', _source, RY.Messages.noMoney)
+                end
+            end
+        end
+    elseif RY.Options.FrameWork == 'qb' then
+        xPlayer = Framework.Functions.GetPlayer(_source)
+        if xPlayer ~= nil then
+            if payment == 'cash' then
+                playerMoney = xPlayer.PlayerData.money["cash"]
 
-		if (payment == 'cash') then
-			local Money = xPlayer.PlayerData.money["cash"]
-
-			if Money >= total then 
-				xPlayer.Functions.RemoveMoney("cash", tonumber(total))
-				if tipo == "item" then
-					xPlayer.Functions.AddItem(item, quantity)
-				elseif tipo == "weapon" then
-					xPlayer.Functions.AddItem(item, 1)
-				end	
-				TriggerClientEvent("QBCore:Notify", _source, Config.Options['purchase_complete']);
-			else
-				TriggerClientEvent("QBCore:Notify", _source, Config.Options['no_money']);
-			end
-		elseif (payment == 'bank') then
-			local Money = xPlayer.PlayerData.money["bank"]
-
-			if Money >= total then 
-				xPlayer.Functions.RemoveMoney("bank", tonumber(total))
-				if tipo == "item" then
-					xPlayer.Functions.AddItem(item, quantity)
-				elseif tipo == "weapon" then
-					xPlayer.Functions.AddItem(item, 1)
-				end	
-				TriggerClientEvent("QBCore:Notify", _source, Config.Options['purchase_complete']);
-			else
-				TriggerClientEvent("QBCore:Notify", _source, Config.Options['no_money']);
-			end
-		end
-	elseif Config.Framework == "esx" then
-		local xPlayer = Framework.GetPlayerFromId(_source)
-
-		if (payment == "cash") then
-			local Money = xPlayer.getAccount('money').money
-
-			if Money >= total then 
-				xPlayer.removeMoney(tonumber(total))
-				if tipo == "item" then
-					xPlayer.addInventoryItem(item, quantity)
-				elseif tipo == "weapon" then
-					xPlayer.addWeapon(item, 42)
-				end	
-				TriggerClientEvent("esx:showNotification", _source, Config.Options['purchase_complete']);
-			else
-				TriggerClientEvent("esx:showNotification", _source, Config.Options['no_money']);
-			end
-		elseif (payment == 'bank') then
-			local Money = xPlayer.getAccount('bank').money
-
-			if Money >= total then 
-				xPlayer.removeAccountMoney('bank', tonumber(total))
-				if tipo == "item" then
-					xPlayer.addInventoryItem(item, quantity)
-				elseif tipo == "weapon" then
-					xPlayer.addWeapon(item, 42)
-				end	
-				TriggerClientEvent("esx:showNotification", _source, Config.Options['purchase_complete']);
-			else
-				TriggerClientEvent("esx:showNotification", _source, Config.Options['no_money']);
-			end
-		end
-	end
+                if playerMoney >= tonumber(itemTotal) then 
+                    xPlayer.Functions.RemoveMoney("cash", tonumber(itemTotal))
+                    xPlayer.Functions.AddItem(itemName, itemQuantity)
+                    TriggerClientEvent('ry-shops:notification', _source, RY.Messages.purchaseCompleted)
+                else
+                    TriggerClientEvent('ry-shops:notification', _source, RY.Messages.noMoney)
+                end
+            elseif payment == 'bank' then
+                playerMoney = xPlayer.PlayerData.money["bank"]
+                
+                if playerMoney >= tonumber(itemTotal) then 
+                    xPlayer.Functions.RemoveMoney("bank", tonumber(itemTotal))
+                    xPlayer.Functions.AddItem(itemName, itemQuantity)
+                    TriggerClientEvent('ry-shops:notification', _source, RY.Messages.purchaseCompleted)
+                else
+                    TriggerClientEvent('ry-shops:notification', _source, RY.Messages.noMoney)
+                end
+            end
+        end
+    end
 end)
+
+
+

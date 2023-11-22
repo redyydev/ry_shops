@@ -1,8 +1,8 @@
 # RY_SHOPS
 A fully configurable store system with a modern and simple design.
-With the ease of creating infinite stores each with different items, giving the possibility to create, for example, only weapons stores.
+With the ease of creating infinite stores each with different items.
 
-![alt text](https://imgur.com/hXO49YI.png)
+![alt text](https://imgur.com/cX6dEyQ.png)
 
 **IMPORTANT**
 

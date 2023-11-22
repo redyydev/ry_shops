@@ -1,123 +1,96 @@
-Config = {}
-Config.Framework = "esx"        -- "esx" or "qb-core"
+RY = {}
 
-Config.Options = {
-    ['purchase_complete'] = "Successfully Purchased, thank you!",
-    ['no_money'] = "You don't have enought money."
+RY.Options = {
+    FrameWork = 'esx', -- esx or qb
+
+    oxTarget = {
+        enable = false, -- if false it will enable markers/3dtext
+        icons = {
+            menu = 'fa-solid fa-cube',
+        } ,
+        labels = {
+            menu = 'Shop',
+        }
+    }
 }
 
-Config.Locations = {
-    ['lossantosavenue'] = {  -- name of the location, you can put whatever you like.
-        shop_name = "SuperMarket",
-        coords = vector3(25.63,-1347.48,29.48), -- coord for the menu.
-        marker = {
-            key = 38, -- key to open the menu. Default E
-            type = 2, -- type of marker.
-            size  = {x = 0.3, y = 0.3, z = 0.3}, -- size of marker.
-            color = {r = 255, g = 255, b = 255}, -- color of marker.
-            text = '[ ~g~E~w~ ] Shop' -- text of marker.
+RY.Messages = {
+    purchaseCompleted = "Successfully Purchased, thank you!",
+    noMoney = "You don't have enought money."
+}
+
+RY.Locations = {
+    ['shop1'] = {
+        shopName = 'SUPER MARKET',
+        menuCoords = vector3(25.63,-1347.48,29.48),
+
+        -- Categorys
+        categorysConfig = {'food', 'electronics', 'utilities'},
+
+        -- Markers
+        markersConfig = {
+            markerMenu = {
+                useKey = 38, -- E
+                markerType = 2,
+                markerSize  = {x = 0.3, y = 0.3, z = 0.3}, 
+                markerColor = {r = 255, g = 255, b = 255},
+                markerText = '[ ~g~E~w~ ] Shop'
+            },
         },
-        blip = {
-            name = '24/7 Shop', -- name of the blip in map.
-            sprite = 59, -- sprite of the blip.
-            scale = 0.8, -- scale of the.
-            color = 2 -- color of the. 
+
+        -- Blips
+        blipsConfig = {
+            blipMenu = {
+                blipName = '24/7 Shop',
+                blipSprite = 59,
+                blipScale = 0.8,
+                blipColor = 2
+            },
         },
-        products = {
+
+        -- Shop Items
+        shopItems = {
             [1] = {
-                name = "Apple", -- name in the menu
-                item = "apple", -- item name in database *remember that you need the item in database to work 100%*
-                image = "apple.png", -- image of product in html/assets
+                itemName = "apple",
+                itemLabel = "Apple",
+                itemImage = "apple.png",
+                itemPrice = 2,
+                itemCategory = 'food',
                 -- IMAGE RESOLUTION --
                 -- 150x100 Pixels --
                 -- IMAGE RESOLUTION --
-                price = 1, -- price of product
-                available = true, -- if is available to buy it or not
-                type = "item" -- item or weapon
             },
             [2] = {
-                name = "Kiwi",
-                item = "kiwi",
-                image = "kiwi.png",
-                price = 4,
-                available = true,
-                type = "item"
+                itemName = "kiwi",
+                itemLabel = "Kiwi",
+                itemImage = "kiwi.png",
+                itemPrice = 2,
+                itemCategory = 'food',
+                -- IMAGE RESOLUTION --
+                -- 150x100 Pixels --
+                -- IMAGE RESOLUTION --
             },
             [3] = {
-                name = "Banana",
-                item = "banana",
-                image = "banana.png",
-                price = 2,
-                available = true,
-                type = "item"
+                itemName = "phone",
+                itemLabel = "Phone",
+                itemImage = "phone.png",
+                itemPrice = 100,
+                itemCategory = 'electronics',
+                -- IMAGE RESOLUTION --
+                -- 150x100 Pixels --
+                -- IMAGE RESOLUTION --
             },
             [4] = {
-                name = "Phone",
-                item = "phone",
-                image = "phone.png",
-                price = 100,
-                available = true,
-                type = "item"
+                itemName = "bandage",
+                itemLabel = "Bandage",
+                itemImage = "Bandage.png",
+                itemPrice = 25,
+                itemCategory = 'utilities',
+                -- IMAGE RESOLUTION --
+                -- 150x100 Pixels --
+                -- IMAGE RESOLUTION --
             },
-            [5] = {
-                name = "Burger",
-                item = "burger",
-                image = "burger.png",
-                price = 100,
-                available = true,
-                type = "item"
-            },
-            [6] = {
-                name = "Water",
-                item = "water",
-                image = "water.png",
-                price = 100,
-                available = true,
-                type = "item"
-            },
-            [7] = {
-                name = "Beer",
-                item = "beer",
-                image = "beer.png",
-                price = 1500,
-                available = false,
-                type = "item"
-            },
-            [8] = {
-                name = "Bandage",
-                item = "bandage",
-                image = "bandage.png",
-                price = 1500,
-                available = true,
-                type = "item"
-            }
         }
+
     },
-    ['weaponshop1'] = {  -- name of the location, you can put whatever you like.
-        shop_name = "Weapon Shop",
-        coords = vector3(22.19,-1107.09,29.78), -- coord for the menu.
-        marker = {
-            key = 38, -- key to open the menu. Default E
-            type = 2, -- type of marker.
-            size  = {x = 0.3, y = 0.3, z = 0.3}, -- size of marker.
-            color = {r = 255, g = 255, b = 255}, -- color of marker.
-            text = '[ ~g~E~w~ ] Weapon Shop' -- text of marker.
-        },
-        blip = {
-            name = '24/7 Weapon Shop', -- name of the blip in map.
-            sprite = 110, -- sprite of the blip.
-            scale = 0.8, -- scale of the.
-            color = 1 -- color of the. 
-        },
-        products = {
-            [1] = {
-                name = "Knife",
-                item = "WEAPON_KNIFE",
-                image = "Knife.png",
-                price = 1500,
-                available = true,
-                type = "weapon"
-            },
-        }
-    }
 }

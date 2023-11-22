@@ -1,258 +1,245 @@
-var checkout = false;
-var in_checkout = false;
+var cache = {
+  basket: [],
+  shopItems: [],
+  totalCheckout: 0,
+  inCheckout: false,
+  paymentOption: null
+}
 
-function main_menu(products, shop_name) {
+function openMenu(shopItems, shopName, categorys) {
   $(".ui").fadeIn();
-  $(".products").html("");
+  $("#shopTitle").html(shopName)
 
-  $("#title_principal").html(`<h1>${shop_name}</h1>`);
-  $.each(products, function (index, product) {
-    if (product.available) {
-      $(".products").append(`
-      <div class="product" id="product-${product.id}">
-          <div class="header">
-            <div class="price">${product.price}$</div>
-            <div class="image">
-              <img src="assets/${product.image}" alt="${product.image}">
-            </div>
-          </div>
-          <div class="footer">
-              <div class="footer-title">${product.name}</div>
-          </div>
-      </div>
-      `);
-    } else {
-      $(".products").append(`
-      <div class="product disabled" id="product-${product.id}">
-          <div class="header">
-            <div class="price">${product.price}$</div>
-            <div class="image">
-              <img src="assets/${product.image}" alt="${product.image}">
-            </div>
-          </div>
-          <div class="footer">
-              <div class="footer-title">${product.name}</div>
-          </div>
-      </div>
-      `);
-    }
-    $(`#product-${product.id}`).click(function () {
-      if (!in_checkout) {
-        if (product.available) {
-          addBasket(
-            product.id,
-            product.name,
-            product.item,
-            product.image,
-            product.price,
-            product.type
-          );
-        } else {
-          unsuccessfully(`#product-${product.id}`);
+  cache.basket = []
+  cache.shopItems = []
+  cache.totalCheckout = 0
+  cache.inCheckout = false
+
+  setupCategorys(categorys)
+  setupShopItems(shopItems)
+
+  $("#checkout").html('CHECKOUT')
+  
+  $("#checkout").css("opacity", "1.0")
+  $("#shopCategorys").css("opacity", "1.0")
+  $("#shopItems").css("opacity", "1.0")
+  $("#basketItems").css("opacity", "1.0")
+
+  $(`.shopButtonCheckout-Btn`).hide()
+  $(`#checkout`).show()
+}
+
+function setupCategorys(categorys) {
+  $("#shopCategorys").html("")
+
+  $("#shopCategorys").append(`
+    <div class="shopCategory" id="category-all" onclick="resetCategory()">All</div>
+  `)
+
+  categorys.forEach(function(category) {
+    $("#shopCategorys").append(`
+      <div class="shopCategory" id="category-${category}">${category}</div>
+    `)
+    
+    $(`#category-${category}`).click(function() {
+      if (!cache.inCheckout) 
+      searchbyCategory(category)
+    })
+  })
+}
+
+function resetCategory() {
+  if (!cache.inCheckout) 
+  cache.shopItems.forEach(function (shopItem){
+    $(`#shopItem-${shopItem.itemID}`).show();
+  })
+}
+
+function searchbyCategory(category) {
+  let regex = new RegExp(category);
+    cache.shopItems.forEach(function (shopItem){
+      $(`#shopItem-${shopItem.itemID}`).hide();
+      if (shopItem.itemCategory.search(regex) > -1){   
+          $(`#shopItem-${shopItem.itemID}`).show();
         }
-      } else {
-        unsuccessfully(`#product-${product.id}`);
-      }
-    });
-  });
-  $(`#checkout`).click(function () {
-    if (basket.length >= 1) {
-      $(`#checkout`).hide();
-      $(`#checkout-out`).show();
-      $(".basket").css("opacity", "0.7");
-      $(".content").css("opacity", "0.7");
-      $(".payout").show();
-      in_checkout = true;
-      checkout_btn();
-    } else {
-      notification("Basket is Empty.");
-    }
-  });
-  $(`#checkout-out`).click(function () {
-    $(`#checkout-out`).hide();
-    $(`#checkout`).show();
-    $(".basket").css("opacity", "1.0");
-    $(".content").css("opacity", "1.0");
-    $(".payout").hide();
-    in_checkout = false;
-  });
+    })
 }
 
-function checkout_btn() {
-  $(`#cash`).click(function () {
-    $.each(basket, function (index, product) {
-      $.post(
-        "https://ry_shops/checkout",
-        JSON.stringify({
-          name: product.name,
-          item: product.item,
-          quantity: product.quantity,
-          total: product.total,
-          type: product.type,
-          payment: "cash",
-        })
-      );
-      closeMenu();
-    });
-  });
-
-  $(`#bank`).click(function () {
-    $.each(basket, function (index, product) {
-      $.post(
-        "https://ry_shops/checkout",
-        JSON.stringify({
-          name: product.name,
-          item: product.item,
-          quantity: product.quantity,
-          total: product.total,
-          type: product.type,
-          payment: "bank",
-        })
-      );
-      closeMenu();
-    });
-  });
-}
-
-function addBasket(id, name, itema, image, price, type) {
-  var item = basket.find((product) => product.id === id);
-  if (item) {
-    if (item.type == "weapon") {
-      unsuccessfully(`#basket-${item.id}`);
-    } else if (item.type == "item") {
-      item.quantity = item.quantity + 1;
-      item.total = item.total + price;
-      total = total + price;
-
-      $("#pay").html(`${total}$`);
-
-      $(`#basket-${item.id}`).html("");
-      $(`#basket-${item.id}`).append(`
-          <div class="header">
-                <div class="price">${item.total}$</div>
-                <div class="image">
-                  <img src="assets/${item.image}" alt="${item.image}">
-                  <span id="basket-count">x${item.quantity}</span>
-                </div>
-              </div>
-          <div class="footer">
-            <div class="footer-title">${item.name}</div>
-          </div>
-          `);
-      success(`#basket-${item.id}`);
-    }
-  } else {
-    basket.push({
-      id: id,
-      name: name,
-      item: itema,
-      image: image,
-      quantity: 1,
-      total: price,
-      price: price,
-      type: type,
-    });
-
-    total = total + price;
-    $("#pay").html(`${total}$`);
-
-    $(".basket").append(`
-    <div class="product-basket" id="basket-${id}">
-        <div class="header">
-          <div class="price">${price}$</div>
-          <div class="image">
-            <img src="assets/${image}" alt="${image}">
-            <span id="basket-count">${type == "weapon" ? "" : "x1"}</span>
-          </div>
-        </div>
-        <div class="footer">
-        <div class="footer-title">${name}</div>
-        </div>
+function setupShopItems(shopItems) {
+  $("#shopItems").html("")
+  $("#basketItems").html("")
+  cache.shopItems = shopItems
+  
+  shopItems.forEach(function(shopItem) {
+    $("#shopItems").append(`
+    <div class="shopItem vov fade-in infinite" id="shopItem-${shopItem.itemID}">
+      <div class="shopItem-Header">${shopItem.itemPrice}$</div>
+      <div class="shopItem-Image">
+        <img src="assets/${shopItem.itemImage}"
+      </div>
+      <div class="shopItem-Footer">${shopItem.itemLabel}</div>
     </div>
-    `);
-    success(`#basket-${id}`);
-    $(`#basket-${id}`).click(function () {
-      basket_product(id);
-    });
+    `)
+
+    $(`#shopItem-${shopItem.itemID}`).click(function() {
+      if (!cache.inCheckout) 
+      addtoBasket(shopItem)
+    })
+  })
+}
+
+function addtoBasket(shopItem) {
+  var searchShopItem = cache.basket.find((product) => product.itemID === shopItem.itemID);
+
+  if (searchShopItem) {
+    searchShopItem.itemQuantity = searchShopItem.itemQuantity + 1
+    searchShopItem.itemTotal = searchShopItem.itemPrice + searchShopItem.itemTotal
+    $(`#basketItem-Quantity-${searchShopItem.itemID}`).html(`x${searchShopItem.itemQuantity}`)
+    $(`#basketItem-Price-${searchShopItem.itemID}`).html(`${searchShopItem.itemTotal}$`)
+  } else {
+    cache.basket.push({
+      itemID: shopItem.itemID,
+			itemName: shopItem.itemName,
+			itemLabel: shopItem.itemLabel,
+			itemImage: shopItem.itemImage,
+			itemPrice: shopItem.itemPrice,
+			itemCategory: shopItem.itemCategory,
+			itemQuantity: 1,
+			itemTotal: shopItem.itemPrice
+    })
+
+    $("#basketItems").append(`
+    <div class="basketItem vov fade-in infinite" id="basketItem-${shopItem.itemID}">
+      <div class="basketItem-Header"><span id="basketItem-Price-${shopItem.itemID}">${shopItem.itemTotal}$</span> <span id="basketItem-Quantity-${shopItem.itemID}" style="float: right;">x${shopItem.itemQuantity}</span></div>
+      <div class="basketItem-Image">
+        <img src="assets/${shopItem.itemImage}"
+      </div>
+      <div class="basketItem-Footer">${shopItem.itemLabel}</div>
+    </div>
+    `)
+
+    $(`#basketItem-${shopItem.itemID}`).click(function() {
+      if (!cache.inCheckout) 
+      removeFromBasket(shopItem)
+    })
+  }
+  cache.totalCheckout = cache.totalCheckout + shopItem.itemPrice
+  $(`#totalcheckout`).html(`${cache.totalCheckout}$`)
+}
+
+function removeFromBasket(shopItem) {
+  var searchShopItem = cache.basket.find((product) => product.itemID === shopItem.itemID);
+
+  if (searchShopItem) {
+    if (searchShopItem.itemQuantity == 1) {
+      var index = cache.basket.indexOf(searchShopItem);
+      cache.basket.splice(index, 1)
+      $(`#basketItem-${searchShopItem.itemID}`).remove();
+    }
+    if (searchShopItem.itemQuantity >= 2 ) {
+      searchShopItem.itemQuantity = searchShopItem.itemQuantity - 1
+      searchShopItem.itemTotal = searchShopItem.itemTotal - searchShopItem.itemPrice
+      $(`#basketItem-Price-${searchShopItem.itemID}`).html(`${searchShopItem.itemTotal}$`)
+      $(`#basketItem-Quantity-${searchShopItem.itemID}`).html(`x${searchShopItem.itemQuantity}`)
+    }   
+    cache.totalCheckout = cache.totalCheckout - searchShopItem.itemPrice
+    $(`#totalcheckout`).html(`${cache.totalCheckout}$`)
   }
 }
 
-function basket_product(id) {
-  var item = basket.find((product) => product.id === id);
-  if (item) {
-    if (!in_checkout) {
-      item.quantity = item.quantity - 1;
-      item.total = item.total - item.price;
-      total = total - item.price;
+function proceedCheckout() {
+  if (cache.totalCheckout >= 1) {
+    $("#more-btns").html("")
+    cache.inCheckout = !cache.inCheckout
+    if (cache.inCheckout) {
 
-      if (basket.length == 0) {
-        $("#pay").html(`0$`);
-      } else {
-        $("#pay").html(`${total}$`);
-      }
+      var date = Date.now()
 
-      if (item.quantity == 0) {
-        var index = basket.indexOf(item);
-        basket.splice(index, 1);
+      $("#more-btns").append(`
+      <button class="shopButtonCheckout-Btn vov fade-in infinite" id="cash-${date}" style="width: 10%; height: 70px; display: none;"><i class="bi bi-cash-stack"  style="font-size: 1.7em;"></i></button>
+      <button class="shopButtonCheckout-Btn vov fade-in infinite" id="bank-${date}"" style="width: 10%; height: 70px; display: none;"><i class="bi bi-credit-card" style="font-size: 1.7em;"></i></button>
+      `)
 
-        $(`#basket-${item.id}`).remove();
-      } else {
-        $(`#basket-${item.id}`).html("");
-        $(`#basket-${item.id}`).append(`
-          <div class="header">
-              <div class="price">${item.total}$</div>
-              <div class="image">
-                <img src="assets/${item.image}" alt="${item.image}">
-                <span id="basket-count">x${item.quantity}</span>
-              </div>
-          </div>
-          <div class="footer">
-            <div class="footer-title">${item.name}</div>
-          </div>
-        `);
-        unsuccessfully(`#basket-${item.id}`);
-      }
+      $("#checkout").html('CANCEL')
+  
+      $("#shopCategorys").css("opacity", "0.5")
+      $("#shopItems").css("opacity", "0.5")
+      $("#basketItems").css("opacity", "0.5")
+      
+      $(`#cash-${date}`).show()
+      $(`#bank-${date}`).show()
+      
+      $(`#cash-${date}`).click(function() {
+          $.post(
+            "https://ry_shops/checkout",
+            JSON.stringify({
+              basket: cache.basket,
+              payment: "cash",
+            })
+          );
+        closeMenu();
+      })
+      
+      $(`#bank-${date}`).click(function() {
+        $.post(
+          "https://ry_shops/checkout",
+          JSON.stringify({
+            basket: cache.basket,
+            payment: "bank",
+          })
+        );
+        closeMenu();
+      })
+
+    } else {
+      $("#checkout").html('CHECKOUT')
+  
+      $("#checkout").css("opacity", "1.0")
+      $("#shopCategorys").css("opacity", "1.0")
+      $("#shopItems").css("opacity", "1.0")
+      $("#basketItems").css("opacity", "1.0")
+  
+      $(`#cash-${cache.totalCheckout}`).hide()
+      $(`#bank-${cache.totalCheckout}`).hide()
     }
   }
 }
 
-function clean() {
-  basket = [];
-  total = 0;
-  in_checkout = false;
 
-  $(".basket").html("");
-  $("#pay").html(`0$`);
-  $(`#checkout-out`).hide();
-  $(`#checkout`).show();
-  $(".basket").css("opacity", "1.0");
-  $(".content").css("opacity", "1.0");
-  $(".payout").hide();
-}
 
-function success(id) {
-  $(`${id}`).css("background", "rgba(74, 214, 39, 0.2)");
-  setTimeout(function () {
-    $(`${id}`).css("background", "rgba(87, 87, 87, 0.2)");
-  }, 100);
-}
 
-function unsuccessfully(id) {
-  $(`${id}`).css("background", "rgba(204, 60, 60, 0.2)");
-  setTimeout(function () {
-    $(`${id}`).css("background", "rgba(87, 87, 87, 0.2)");
-  }, 100);
-}
-function notification(text) {
-  $(".notification").fadeIn();
-  $(".notification").css("right", "5%");
-  $(".notification").html(`<i class="bi bi-bell"></i> ${text}`);
-  setTimeout(function () {
-    $(".notification").fadeOut();
-  }, 3000);
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function closeMenu() {
-  $.post("http://ry_shops/CloseUI", JSON.stringify({}));
-  clean();
+  $.post("http://ry_shops/CloseMenu", JSON.stringify({}));
 }

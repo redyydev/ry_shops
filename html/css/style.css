@@ -1,0 +1,310 @@
+
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+body,html{
+    overflow-y: hidden; /* Hide vertical scrollbar */
+    overflow-x: hidden; /* Hide horizontal scrollbar */
+    text-rendering: optimizeLegibility !important;
+    -webkit-font-smoothing: antialiased !important;
+    color: rgb(255, 255, 255);
+}
+
+body, input, button {
+    font-family: 'Roboto', Arial, Helvetica, sans-serif;
+    font-size: 14px;
+}
+
+.ui {
+  width: 100%;
+  height:100%;
+  display: flex;
+  align-items: center;
+  background: rgb(0,0,0);
+  background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.11248249299719892) 50%, rgba(0,0,0,1) 100%);
+}
+
+.shopContainer {
+  width: 1000px;
+  height: 700px;
+  transition: all 0.2s ease 0s;
+  z-index: 9999999;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -999999;
+}
+
+.shopContainer .shopHeader {
+  width: 95%;
+  height: 70px;
+  background-color: rgba(18, 18, 18, 0.71);
+  box-shadow: 2px 5px 10px 0 rgba(0,0,0,0.20);
+  border-radius: 5px;
+}
+
+.shopContainer .shopHeader .shopHeader-Title {
+  width: 70%;
+  height: 100%;
+  float: left;
+  font-weight: 600;
+  font-size: 23px;
+  text-transform: uppercase;
+  padding: 22px;
+}
+
+.shopContainer .shopHeader .shopHeader-Others {
+  width: 30%;
+  height: 100%;
+  float: left;
+  padding: 22px;
+}
+
+.shopContainer .shopHeader .shopHeader-Others .shopHeader-Others-BasketTotal {
+  width: 50%;
+  height: 100%;
+  float: left;
+}
+
+.shopContainer .shopHeader .shopHeader-Others .shopHeader-Others-BasketTotal .shopHeader-Others-BasketTotal-Icon {
+  float: left;
+}
+
+.shopContainer .shopHeader .shopHeader-Others .shopHeader-Others-BasketTotal .shopHeader-Others-BasketTotal-Others {
+  float: left;
+  margin-left: 10px;
+}
+
+.shopContainer .shopHeader .shopHeader-Others .shopHeader-Others-BasketTotal .shopHeader-Others-BasketTotal-Others .shopHeader-Others-BasketTotal-Others-Text {
+  text-transform: uppercase;
+  opacity: 0.5;
+}
+
+.shopContainer .shopHeader .shopHeader-Others .shopHeader-Others-Exit {
+  width: 50%;
+  height: 100%;
+  float: left;
+}
+
+.shopContainer .shopHeader .shopHeader-Others .shopHeader-Others-Exit .shopHeader-Others-Exit-Btn {
+  float: right;
+}
+
+.shopContainer .shopHeader .shopHeader-Others .shopHeader-Others-Exit .shopHeader-Others-Exit-Btn i {
+  transition: all 0.2s ease 0s;
+  font-size: 1.5em;
+}
+
+.shopContainer .shopHeader .shopHeader-Others .shopHeader-Others-Exit .shopHeader-Others-Exit-Btn i:hover {
+  opacity: 0.5;
+}
+
+.shopContainer .shopCategorys {
+  width: 95%;
+  height: 40px;
+  margin-top: 10px;
+}
+
+.shopContainer .shopCategorys .shopCategory {
+  float: left;
+  min-width: 5%;
+  max-width: 15%;
+  height: 100%;
+  background-color: rgba(18, 18, 18, 0.71);
+  box-shadow: 2px 5px 10px 0 rgba(0,0,0,0.20);
+  border-radius: 5px;
+  text-transform: capitalize;
+  padding: 11px;
+  margin-left: 10px;
+  transition: all 0.2s ease 0s;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.shopContainer .shopCategorys .shopCategory:hover {
+  background-color: rgba(18, 18, 18, 0.95);
+}
+
+.shopContainer .shopCategorys .shopCategory:first-child {
+  margin-left: 0;
+}
+
+.shopContainer .shopContent {
+  width: 65%;
+  height: 500px;
+  background-color: rgba(18, 18, 18, 0.71);
+  box-shadow: 2px 5px 10px 0 rgba(0,0,0,0.20);
+  border-radius: 5px;
+  margin-top: 10px;
+  float: left;
+}
+
+.shopContainer .shopContent .shopItems {
+  transition: all 0.2s ease 0s;
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+.shopContainer .shopContent .shopItems .shopItem {
+  width: 150px;
+  height: 150px;
+  background: rgba(87, 87, 87, 0.2);
+  border-radius: 5px;
+  box-shadow: 2px 5px 10px 0 rgba(0,0,0,0.20);
+  float: left;
+  margin-left: 10px;
+  margin-top: 10px;
+  transition: all 0.2s ease 0s;
+}
+
+.shopContainer .shopContent .shopItems .shopItem:hover {
+  background: rgba(87, 87, 87, 0.45);
+}
+
+.shopContainer .shopContent .shopItems .shopItem .shopItem-Header {
+  width: 100%;
+  height: 20px;
+  padding: 10px;
+}
+
+.shopContainer .shopContent .shopItems .shopItem .shopItem-Image {
+  width: 100%;
+  height: 90px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.shopContainer .shopContent .shopItems .shopItem .shopItem-Image img {
+  width: 70%;
+  margin-top: 10px;
+}
+
+.shopContainer .shopContent .shopItems .shopItem .shopItem-Footer {
+  width: 100%;
+  height: 20px;
+  text-align: left;
+  padding: 10px;
+}
+
+.shopContainer .shopRightContent {
+  width: 29%;
+  height: 500px;
+  background-color: rgba(18, 18, 18, 0.71);
+  box-shadow: 2px 5px 10px 0 rgba(0,0,0,0.20);
+  border-radius: 5px;
+  margin-top: 10px;
+  float: left;
+  margin-left: 10px;
+}
+
+.shopContainer .shopRightContent .basketItems {
+  transition: all 0.2s ease 0s;
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+.shopContainer .shopRightContent .basketItems .basketItem {
+  width: 150px;
+  height: 150px;
+  background: rgba(87, 87, 87, 0.2);
+  border-radius: 5px;
+  box-shadow: 2px 5px 10px 0 rgba(0,0,0,0.20);
+  float: left;
+  margin-left: 65px;
+  margin-top: 10px;
+  transition: all 0.2s ease 0s;
+}
+
+.shopContainer .shopRightContent .basketItems .basketItem:last-child {
+  margin-bottom: 10px;
+}
+
+
+.shopContainer .shopRightContent .basketItems .basketItem:hover {
+  background: rgba(87, 87, 87, 0.45);
+}
+
+.shopContainer .shopRightContent .basketItems .basketItem .basketItem-Header {
+  width: 100%;
+  height: 20px;
+  padding: 10px;
+}
+
+.shopContainer .shopRightContent .basketItems .basketItem .basketItem-Image {
+  width: 100%;
+  height: 90px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.shopContainer .shopRightContent .basketItems .basketItem .basketItem-Image img {
+  width: 70%;
+  margin-top: 10px;
+}
+
+.shopContainer .shopRightContent .basketItems .basketItem .basketItem-Footer {
+  width: 100%;
+  height: 20px;
+  text-align: left;
+  padding: 10px;
+}
+
+.shopContainer .shopButtonCheckout {
+  width: 95%;
+  height: 70px;
+  margin-top: 10px;
+  float: right;
+  margin-right: 50px;
+}
+
+.shopContainer .shopButtonCheckout .shopButtonCheckout-Btn {
+  width: 30.5%;
+  height: 100%;
+  background-color: rgba(18, 18, 18, 0.71);
+  box-shadow: 2px 5px 10px 0 rgba(0,0,0,0.20);
+  border: 0;
+  border-radius: 5px;
+  text-align: center;
+  color: #fff;
+  font-weight: 600;
+  font-size: 17px;
+  text-transform: uppercase;
+  float: right;
+  margin-right: 10px;
+  transition: all 0.2s ease 0s;
+}
+
+.shopContainer .shopButtonCheckout .shopButtonCheckout-Btn:hover {
+  background-color: rgba(18, 18, 18, 0.95);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  direction:rtl; 
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+  direction:rtl; 
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(87, 87, 87, 0.2);
+  border-radius: 10px;
+}
