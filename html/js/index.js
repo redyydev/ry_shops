@@ -14,5 +14,7 @@ window.addEventListener("message", function (event) {
       if (Config.closeKeys.includes(key.which)) {
         closeMenu();
       }
-  });
+    });
+
+    
 });

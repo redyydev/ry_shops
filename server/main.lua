@@ -1,4 +1,5 @@
 Framework = nil
+notiSended = false
 
 if RY.Options.FrameWork == 'esx' then
     Framework = exports['es_extended']:getSharedObject()   

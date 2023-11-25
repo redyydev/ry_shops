@@ -19,12 +19,8 @@
                             <i class="bi bi-basket"></i> 
                         </div>
                         <div class="shopHeader-Others-BasketTotal-Others">
-                            <div class="shopHeader-Others-BasketTotal-Others-Text">
-                                Total
-                            </div>
-                            <div class="shopHeader-Others-BasketTotal-Others-Total" id="totalcheckout">
-                                0$
-                            </div>
+                            <div class="shopHeader-Others-BasketTotal-Others-Text">Total</div>
+                            <div class="shopHeader-Others-BasketTotal-Others-Total" id="totalcheckout">0$</div>
                         </div>
                     </div>
                     <div class="shopHeader-Others-Exit">
@@ -33,10 +29,16 @@
                 </div>
             </div>
             <div class="shopCategorys" id="shopCategorys"></div>
+            <div class="shopSearch" id="shopSearch">
+                <form id="shopSearch-Form">
+                    <input type="text" id="shopSearch-Input" placeholder="Search Product..">
+                </form>
+            </div>
             <div class="shopContent">
                 <div class="shopItems" id="shopItems"></div>
             </div>
             <div class="shopRightContent">
+                <div class="noProductsAdded" id="noProductsAdded" style="display: none;"><h1 id="noProductsAdded-Text">Basket Empty</h1></div>
                 <div class="basketItems" id="basketItems"></div>
             </div>
             <div class="shopButtonCheckout" id="shopButtonCheckout">

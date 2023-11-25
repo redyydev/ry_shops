@@ -72,6 +72,7 @@ body, input, button {
   width: 50%;
   height: 100%;
   float: left;
+  margin-top: -3px;
 }
 
 .shopContainer .shopHeader .shopHeader-Others .shopHeader-Others-BasketTotal .shopHeader-Others-BasketTotal-Icon {
@@ -107,16 +108,36 @@ body, input, button {
   opacity: 0.5;
 }
 
-.shopContainer .shopCategorys {
-  width: 95%;
+
+.shopContainer .shopSearch {
+  width: 29%;
   height: 40px;
   margin-top: 10px;
+  float: left;
+  margin-left: 10px;
+}
+
+.shopContainer .shopSearch #shopSearch-Input {
+  width: 100%;
+  height: 40px;
+  background: rgba(18, 18, 18, 0.71);
+  border-radius: 5px;
+  border: 0;
+  padding-left: 10px;
+  color: #fff;
+}
+
+.shopContainer .shopCategorys {
+  width: 65%;
+  height: 40px;
+  margin-top: 10px;
+  float: left;
 }
 
 .shopContainer .shopCategorys .shopCategory {
   float: left;
   min-width: 5%;
-  max-width: 15%;
+  max-width: 50%;
   height: 100%;
   background-color: rgba(18, 18, 18, 0.71);
   box-shadow: 2px 5px 10px 0 rgba(0,0,0,0.20);
@@ -208,6 +229,23 @@ body, input, button {
   margin-top: 10px;
   float: left;
   margin-left: 10px;
+}
+
+.shopContainer .shopRightContent .noProductsAdded {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+.shopContainer .shopRightContent .noProductsAdded #noProductsAdded-Text {
+  text-transform: uppercase;
+  font-size: 27px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  transform: rotate(90deg);
+  margin-top: 220px;
+  opacity: 0.2;
+  transition: all 0.2s ease 0s;
 }
 
 .shopContainer .shopRightContent .basketItems {

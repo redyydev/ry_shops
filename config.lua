@@ -51,11 +51,11 @@ RY.Locations = {
         -- Shop Items
         shopItems = {
             [1] = {
-                itemName = "apple",
-                itemLabel = "Apple",
-                itemImage = "apple.png",
-                itemPrice = 2,
-                itemCategory = 'food',
+                itemName = "apple", -- item name in Database
+                itemLabel = "Apple", -- item lable to display in UI
+                itemImage = "apple.png", -- image in html/assets
+                itemPrice = 2, -- item price
+                itemCategory = 'food', -- item category
                 -- IMAGE RESOLUTION --
                 -- 150x100 Pixels --
                 -- IMAGE RESOLUTION --
@@ -66,9 +66,6 @@ RY.Locations = {
                 itemImage = "kiwi.png",
                 itemPrice = 2,
                 itemCategory = 'food',
-                -- IMAGE RESOLUTION --
-                -- 150x100 Pixels --
-                -- IMAGE RESOLUTION --
             },
             [3] = {
                 itemName = "phone",
@@ -76,9 +73,6 @@ RY.Locations = {
                 itemImage = "phone.png",
                 itemPrice = 100,
                 itemCategory = 'electronics',
-                -- IMAGE RESOLUTION --
-                -- 150x100 Pixels --
-                -- IMAGE RESOLUTION --
             },
             [4] = {
                 itemName = "bandage",
@@ -86,9 +80,6 @@ RY.Locations = {
                 itemImage = "Bandage.png",
                 itemPrice = 25,
                 itemCategory = 'utilities',
-                -- IMAGE RESOLUTION --
-                -- 150x100 Pixels --
-                -- IMAGE RESOLUTION --
             },
         }
 
