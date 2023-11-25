@@ -15,8 +15,8 @@ RY.Options = {
 }
 
 RY.Messages = {
-    purchaseCompleted = "Successfully Purchased, thank you!",
-    noMoney = "You don't have enought money."
+    purchaseCompleted = "Successfully Purchased (-%total%$), thank you!",
+    noMoney = "You don't have enought money (You need %total%$)"
 }
 
 RY.Locations = {
@@ -54,7 +54,7 @@ RY.Locations = {
                 itemName = "apple", -- item name in Database
                 itemLabel = "Apple", -- item lable to display in UI
                 itemImage = "apple.png", -- image in html/assets
-                itemPrice = 2, -- item price
+                itemPrice = 20000000, -- item price
                 itemCategory = 'food', -- item category
                 -- IMAGE RESOLUTION --
                 -- 150x100 Pixels --

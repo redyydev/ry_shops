@@ -181,22 +181,24 @@ function proceedCheckout() {
       $(`#bank-${date}`).show()
       
       $(`#cash-${date}`).click(function() {
-          $.post(
-            "https://ry_shops/checkout",
+        $.post(
+          "https://ry_shops/goToCheckout",
             JSON.stringify({
+              totalPayment: cache.totalCheckout,
               basket: cache.basket,
-              payment: "cash",
-            })
-          );
+              paymentType: "cash"
+          })
+        );
         closeMenu();
       })
       
       $(`#bank-${date}`).click(function() {
         $.post(
-          "https://ry_shops/checkout",
+          "https://ry_shops/goToCheckout",
           JSON.stringify({
+            totalPayment: cache.totalCheckout,
             basket: cache.basket,
-            payment: "bank",
+            paymentType: "bank"
           })
         );
         closeMenu();

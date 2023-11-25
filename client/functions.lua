@@ -24,11 +24,8 @@ function openMenu(lastLocation)
 	InMenu = true
 end
 
-function checkout(basket, payment)
-	Citizen.Wait(100)
-	for i=1, #basket, 1 do
-        TriggerServerEvent('ry-shops:checkout', basket[i].itemName, basket[i].itemQuantity, basket[i].itemTotal, payment)
-	end
+function goToCheckout(totalPayment, basket, paymentType) 
+	TriggerServerEvent('ry-shops:goToCheckout', totalPayment, basket, paymentType)
 end
 
 function notification(msg, type)

@@ -7,16 +7,8 @@ RegisterNetEvent('ry-shops:notification',function(message)
     notification(message)
 end)
 
-RegisterNUICallback("checkout",function(data)
-   local basket = {}
-   local payment = data.payment
-    
-   basket = {}
-   basket = data.basket
-
-   Citizen.Wait(100)
-
-   checkout(basket, payment)
+RegisterNUICallback("goToCheckout",function(data)
+    goToCheckout(data.totalPayment, data.basket, data.paymentType)
 end)
 
 RegisterNUICallback("CloseMenu",function()
