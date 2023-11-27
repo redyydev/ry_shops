@@ -25,6 +25,7 @@ function openMenu(shopItems, shopName, categorys) {
   $("#shopCategorys").css("opacity", "1.0")
   $("#shopItems").css("opacity", "1.0")
   $("#basketItems").css("opacity", "1.0")
+  $("#shopSearch-ClearBasket").css("opacity", "1.0")
 
   $(`.shopButtonCheckout-Btn`).hide()
   $(`#checkout`).show()
@@ -174,6 +175,7 @@ function proceedCheckout() {
       $("#checkout").html('CANCEL')
   
       $("#shopCategorys").css("opacity", "0.5")
+      $("#shopSearch-ClearBasket").css("opacity", "0.5")
       $("#shopItems").css("opacity", "0.5")
       $("#basketItems").css("opacity", "0.5")
       
@@ -187,7 +189,7 @@ function proceedCheckout() {
               totalPayment: cache.totalCheckout,
               basket: cache.basket,
               paymentType: "cash"
-          })
+            })
         );
         closeMenu();
       })
@@ -200,17 +202,18 @@ function proceedCheckout() {
             basket: cache.basket,
             paymentType: "bank"
           })
-        );
-        closeMenu();
-      })
-
-    } else {
-      $("#checkout").html('CHECKOUT')
-  
-      $("#checkout").css("opacity", "1.0")
-      $("#shopCategorys").css("opacity", "1.0")
-      $("#shopItems").css("opacity", "1.0")
-      $("#basketItems").css("opacity", "1.0")
+          );
+          closeMenu();
+        })
+        
+      } else {
+        $("#checkout").html('CHECKOUT')
+        
+        $("#checkout").css("opacity", "1.0")
+        $("#shopSearch-ClearBasket").css("opacity", "1.0")
+        $("#shopCategorys").css("opacity", "1.0")
+        $("#shopItems").css("opacity", "1.0")
+        $("#basketItems").css("opacity", "1.0")
   
       $(`#cash-${cache.totalCheckout}`).hide()
       $(`#bank-${cache.totalCheckout}`).hide()
@@ -246,6 +249,21 @@ function setupSearch(shopItems) {
       }
     }
   });
+}
+
+function clearBasket() {
+  if (cache.basket.length && !cache.inCheckout) {
+    cache.basket = []
+    cache.totalCheckout = 0
+    $("#basketItems").html("")
+    $("#noProductsAdded").fadeIn()
+    $(`#totalcheckout`).html(`0$`)
+  } else {
+    $("#noProductsAdded-Text").css("color", "red")
+    setTimeout(function () {
+      $("#noProductsAdded-Text").css("color", "white")
+    }, 100);
+  }
 }
 
 
