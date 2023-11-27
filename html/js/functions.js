@@ -20,7 +20,7 @@ function openMenu(shopItems, shopName, categorys) {
   setupSearch(shopItems)
 
   $("#checkout").html('CHECKOUT')
-  
+  $(`#totalcheckout`).html(`0$`)
   $("#checkout").css("opacity", "1.0")
   $("#shopCategorys").css("opacity", "1.0")
   $("#shopItems").css("opacity", "1.0")
