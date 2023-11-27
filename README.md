@@ -2,7 +2,7 @@
 A fully configurable store system with a modern and simple design.
 With the ease of creating infinite stores each with different items.
 
-![alt text](https://imgur.com/QKFF05I.png)
+![alt text](https://imgur.com/fd9v4qr.png)
 
 **IMPORTANT**
 
