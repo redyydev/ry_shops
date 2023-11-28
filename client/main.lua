@@ -60,13 +60,15 @@ for k, v in pairs(RY.Locations) do
         })
     end
 
-	shop = AddBlipForCoord(v.menuCoords.x, v.menuCoords.y, v.menuCoords.z)
-	SetBlipSprite (shop, v.blipsConfig.blipMenu.blipSprite)
-	SetBlipDisplay(shop, 4)
-	SetBlipScale  (shop, v.blipsConfig.blipMenu.blipScale)
-	SetBlipAsShortRange(shop, true)
-	SetBlipColour(shop, v.blipsConfig.blipMenu.blipColor)
-	BeginTextCommandSetBlipName("STRING")
-	AddTextComponentSubstringPlayerName(v.blipsConfig.blipMenu.blipName)
-	EndTextCommandSetBlipName(shop)
+    if v.blipsConfig.blipMenu.blipShow then
+        shop = AddBlipForCoord(v.menuCoords.x, v.menuCoords.y, v.menuCoords.z)
+        SetBlipSprite (shop, v.blipsConfig.blipMenu.blipSprite)
+        SetBlipDisplay(shop, 4)
+        SetBlipScale  (shop, v.blipsConfig.blipMenu.blipScale)
+        SetBlipAsShortRange(shop, true)
+        SetBlipColour(shop, v.blipsConfig.blipMenu.blipColor)
+        BeginTextCommandSetBlipName("STRING")
+        AddTextComponentSubstringPlayerName(v.blipsConfig.blipMenu.blipName)
+        EndTextCommandSetBlipName(shop)
+    end
 end

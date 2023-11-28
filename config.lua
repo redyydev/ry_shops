@@ -44,7 +44,8 @@ RY.Locations = {
                 blipName = '24/7 Shop',
                 blipSprite = 59,
                 blipScale = 0.8,
-                blipColor = 2
+                blipColor = 2,
+                blipShow = true,
             },
         },
 
@@ -82,6 +83,46 @@ RY.Locations = {
                 itemCategory = 'utilities',
             },
         }
+    },
 
+    ['blackmarket'] = {
+        shopName = 'BLACK MARKET',
+        menuCoords = vector3(-1.8970, -1400.0311, 29.2717),
+
+        -- Categorys
+        categorysConfig = {'ilegal'},
+
+        -- Markers
+        markersConfig = {
+            markerMenu = {
+                useKey = 38, -- E
+                markerType = 2,
+                markerSize  = {x = 0.3, y = 0.3, z = 0.3}, 
+                markerColor = {r = 255, g = 255, b = 255},
+                markerText = '[ ~g~E~w~ ] Shop'
+            },
+        },
+
+        -- Blips
+        blipsConfig = {
+            blipMenu = {
+                blipName = '24/7 Shop',
+                blipSprite = 59,
+                blipScale = 0.8,
+                blipColor = 2,
+                blipShow = false,
+            },
+        },
+
+        -- Shop Items
+        shopItems = {
+            [1] = {
+                itemName = "radio", 
+                itemLabel = "Radio", 
+                itemImage = "radio.png", 
+                itemPrice = 250,
+                itemCategory = 'ilegal',
+            },
+        }
     },
 }

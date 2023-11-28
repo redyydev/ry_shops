@@ -302,40 +302,37 @@ body, input, button {
   background: rgba(87, 87, 87, 0.45);
 }
 
-.shopContainer .shopRightContent .basketItems .basketItem .basketItem-Header {
-  width: 20%;
-  height: 40px;
-  padding: 10px;
-  margin-top: 10px;
-  margin-left: 100px;
-  text-align: left;
-}
-
-.shopContainer .shopRightContent .basketItems .basketItem .basketItem-Header span:first-child {
-  background: rgb(94, 235, 52, 0.7);
-  border-radius: 5px;
-  padding: 5px;
-}
-
 .shopContainer .shopRightContent .basketItems .basketItem .basketItem-Image {
   width: 40%;
-  text-align: center;
   height: 100%;
+  text-align: center;
   float: left;
 }
-
 .shopContainer .shopRightContent .basketItems .basketItem .basketItem-Image img {
   width: 70%;
+  padding-top: 10px;
+}
+
+.shopContainer .shopRightContent .basketItems .basketItem .basketItem-header {
+  width: 40%;
+  height: 30px;
+  float: left;
+  margin-left: 10px;
   margin-top: 10px;
 }
 
-.shopContainer .shopRightContent .basketItems .basketItem .basketItem-Footer {
-  width: 100%;
-  height: 20px;
-  text-align: left;
-  padding: 10px;
-  margin-left: 100px;
-  margin-top: -60px;
+.shopContainer .shopRightContent .basketItems .basketItem .basketItem-footer {
+  width: 40%;
+  height: 30px;
+  margin-left: 10px;
+  float: left;
+  margin-top: 5px;
+}
+
+.shopContainer .shopRightContent .basketItems .basketItem .basketItem-footer span {
+  background: rgba(56, 168, 5, 0.71);
+  padding: 5px;
+  border-radius: 5px;
 }
 
 .shopContainer .shopButtonCheckout {
