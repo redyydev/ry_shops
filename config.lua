@@ -45,7 +45,7 @@ RY.Locations = {
                 blipSprite = 59,
                 blipScale = 0.8,
                 blipColor = 2,
-                blipShow = true,
+                blipShow = true, -- if blip show on map or not
             },
         },
 
@@ -99,14 +99,14 @@ RY.Locations = {
                 markerType = 2,
                 markerSize  = {x = 0.3, y = 0.3, z = 0.3}, 
                 markerColor = {r = 255, g = 255, b = 255},
-                markerText = '[ ~g~E~w~ ] Shop'
+                markerText = '[ ~g~E~w~ ] Black Market'
             },
         },
 
         -- Blips
         blipsConfig = {
             blipMenu = {
-                blipName = '24/7 Shop',
+                blipName = 'Black Market',
                 blipSprite = 59,
                 blipScale = 0.8,
                 blipColor = 2,
