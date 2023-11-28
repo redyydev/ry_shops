@@ -9,7 +9,7 @@ elseif RY.Options.FrameWork == 'qb' then
     Framework = exports['qb-core']:GetCoreObject()
 end
 
-if not RY.Options.oxTarget.enable then
+if not RY.Options.oxTarget then
     Citizen.CreateThread(function()
         while true do 
             Citizen.Wait(1)
@@ -42,7 +42,7 @@ if not RY.Options.oxTarget.enable then
 end
 
 for k, v in pairs(RY.Locations) do
-    if RY.Options.oxTarget.enable then
+    if RY.Options.oxTarget then
         exports.ox_target:addBoxZone({
             coords = vector3(v.menuCoords.x, v.menuCoords.y, v.menuCoords.z),
             size = vector3(3,3,3),
@@ -53,8 +53,8 @@ for k, v in pairs(RY.Locations) do
                     name = 'shop' .. k,
                     event = 'ry-shops:openMenu',
                     args = { location = k },
-                    icon = RY.Options.oxTarget.icons.menu,
-                    label = RY.Options.oxTarget.labels.menu
+                    icon = v.oxTargetConfig.icon,
+                    label = v.oxTargetConfig.label
                 }
             }
         })

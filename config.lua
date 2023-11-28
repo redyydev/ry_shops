@@ -2,16 +2,7 @@ RY = {}
 
 RY.Options = {
     FrameWork = 'esx', -- esx or qb
-
-    oxTarget = {
-        enable = false, -- if false it will enable markers/3dtext
-        icons = {
-            menu = 'fa-solid fa-cube',
-        } ,
-        labels = {
-            menu = 'Shop',
-        }
-    }
+    oxTarget = true, -- if false it will enable markers/3dtext
 }
 
 RY.Messages = {
@@ -26,6 +17,12 @@ RY.Locations = {
 
         -- Categorys
         categorysConfig = {'food', 'electronics', 'utilities'},
+
+        -- OxTarget
+        oxTargetConfig = {
+            icon = 'fa-solid fa-cube',
+            label = 'Shop',
+        },
 
         -- Markers
         markersConfig = {
@@ -45,7 +42,7 @@ RY.Locations = {
                 blipSprite = 59,
                 blipScale = 0.8,
                 blipColor = 2,
-                blipShow = true, -- if blip show on map or not
+                blipShow = true,
             },
         },
 
@@ -92,6 +89,12 @@ RY.Locations = {
         -- Categorys
         categorysConfig = {'ilegal'},
 
+        -- OxTarget
+        oxTargetConfig = {
+            icon = 'fa-solid fa-cube',
+            label = 'Black Market',
+        },
+
         -- Markers
         markersConfig = {
             markerMenu = {
@@ -99,14 +102,14 @@ RY.Locations = {
                 markerType = 2,
                 markerSize  = {x = 0.3, y = 0.3, z = 0.3}, 
                 markerColor = {r = 255, g = 255, b = 255},
-                markerText = '[ ~g~E~w~ ] Black Market'
+                markerText = '[ ~g~E~w~ ] BLACK MARKET'
             },
         },
 
         -- Blips
         blipsConfig = {
             blipMenu = {
-                blipName = 'Black Market',
+                blipName = 'BLACK MARKET',
                 blipSprite = 59,
                 blipScale = 0.8,
                 blipColor = 2,
