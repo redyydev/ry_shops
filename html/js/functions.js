@@ -117,11 +117,11 @@ function addtoBasket(shopItem) {
 
     $("#basketItems").append(`
     <div class="basketItem vov fade-in infinite" id="basketItem-${shopItem.itemID}">
-      <div class="basketItem-Header"><span id="basketItem-Price-${shopItem.itemID}">${shopItem.itemTotal}$</span> <span id="basketItem-Quantity-${shopItem.itemID}" style="float: right;">x${shopItem.itemQuantity}</span></div>
-      <div class="basketItem-Image">
-        <img src="assets/${shopItem.itemImage}"
-      </div>
-      <div class="basketItem-Footer">${shopItem.itemLabel}</div>
+    <div class="basketItem-Image">
+      <img src="assets/${shopItem.itemImage}"
+    </div>
+    <div class="basketItem-Footer">${shopItem.itemLabel}<span id="basketItem-Quantity-${shopItem.itemID}" style="margin-left: 5px;">x${shopItem.itemQuantity}</span></div>
+    <div class="basketItem-Header"><span id="basketItem-Price-${shopItem.itemID}">${shopItem.itemTotal}$</span></div>
     </div>
     `)
 
