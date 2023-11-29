@@ -2,8 +2,12 @@ RY = {}
 
 RY.Options = {
     FrameWork = 'esx', -- esx or qb
+<<<<<<< HEAD
     accountBlackMoney = 'black_money', -- account Name of Black Money
     oxTarget = true, -- if false it will enable markers/3dtext
+=======
+    oxTarget = false, -- if false it will enable markers/3dtext
+>>>>>>> fe2e43eaaca42bdb2c3d6192e7745085fc654a9a
 }
 
 RY.Messages = {
