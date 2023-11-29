@@ -3,7 +3,7 @@ window.addEventListener("message", function (event) {
     var data = event.data.data
   
     if (action == "openMenu") {
-      openMenu(data.shopItems, data.shopName, data.categorys)
+      openMenu(data.shopItems, data.shopName, data.categorys, data.useBlackMoney)
     } else if (action == "closeMenu") {
       $(".ui").fadeOut();
     }

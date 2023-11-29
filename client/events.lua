@@ -8,7 +8,7 @@ RegisterNetEvent('ry-shops:notification',function(message)
 end)
 
 RegisterNUICallback("goToCheckout",function(data)
-    goToCheckout(data.totalPayment, data.basket, data.paymentType)
+    goToCheckout(data.totalPayment, data.basket, data.paymentType, data.useBlackMoney)
 end)
 
 RegisterNUICallback("CloseMenu",function()

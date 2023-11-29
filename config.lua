@@ -2,6 +2,7 @@ RY = {}
 
 RY.Options = {
     FrameWork = 'esx', -- esx or qb
+    accountBlackMoney = 'black_money', -- account Name of Black Money
     oxTarget = true, -- if false it will enable markers/3dtext
 }
 
@@ -13,6 +14,7 @@ RY.Messages = {
 RY.Locations = {
     ['shop1'] = {
         shopName = 'SUPER MARKET',
+        useBlackMoney = false, -- if true player have to pay with black money.
         menuCoords = vector3(25.63,-1347.48,29.48),
 
         -- Categorys
@@ -84,6 +86,7 @@ RY.Locations = {
 
     ['blackmarket'] = {
         shopName = 'BLACK MARKET',
+        useBlackMoney = true,
         menuCoords = vector3(-1.8970, -1400.0311, 29.2717),
 
         -- Categorys

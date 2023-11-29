@@ -18,14 +18,14 @@ function openMenu(lastLocation)
 	end
 
 	TriggerScreenblurFadeIn(1)
-	SendNUIMessage({action = 'openMenu', data = { shopItems = shopItems, shopName = RY.Locations[cache.lastLocation].shopName, categorys = RY.Locations[cache.lastLocation].categorysConfig }})
+	SendNUIMessage({action = 'openMenu', data = { shopItems = shopItems, shopName = RY.Locations[cache.lastLocation].shopName, categorys = RY.Locations[cache.lastLocation].categorysConfig, useBlackMoney = RY.Locations[cache.lastLocation].useBlackMoney }})
 	SetNuiFocus(true, true)
 
 	InMenu = true
 end
 
-function goToCheckout(totalPayment, basket, paymentType) 
-	TriggerServerEvent('ry-shops:goToCheckout', totalPayment, basket, paymentType)
+function goToCheckout(totalPayment, basket, paymentType, useBlackMoney) 
+	TriggerServerEvent('ry-shops:goToCheckout', totalPayment, basket, paymentType, useBlackMoney)
 end
 
 function notification(msg, type)

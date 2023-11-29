@@ -1,5 +1,4 @@
 Framework = nil
-notiSended = false
 
 if RY.Options.FrameWork == 'esx' then
     Framework = exports['es_extended']:getSharedObject()   
@@ -8,7 +7,7 @@ elseif RY.Options.FrameWork == 'qb' then
 end
 
 RegisterServerEvent('ry-shops:goToCheckout')
-AddEventHandler('ry-shops:goToCheckout', function(totalPayment, basket, paymentType)
+AddEventHandler('ry-shops:goToCheckout', function(totalPayment, basket, paymentType, useBlackMoney)
     local _source = source
     local xPlayer = nil
     local playerMoney = 0
@@ -21,10 +20,10 @@ AddEventHandler('ry-shops:goToCheckout', function(totalPayment, basket, paymentT
 
     if RY.Options.FrameWork == 'esx' then
         xPlayer = Framework.GetPlayerFromId(_source)
-        if paymentType == 'cash' then
-            playerMoney = xPlayer.getAccount('money').money
-            if playerMoney >= totalPayment then 
-                xPlayer.removeMoney(totalPayment)
+        if useBlackMoney then
+            playerMoney = xPlayer.getAccount(RY.Options.accountBlackMoney).money
+            if playerMoney >= totalPayment then
+                xPlayer.removeAccountMoney(RY.Options.accountBlackMoney, totalPayment)
                 for k,v in pairs(basket) do
                     xPlayer.addInventoryItem(v.itemName, v.itemQuantity)
                 end
@@ -32,27 +31,38 @@ AddEventHandler('ry-shops:goToCheckout', function(totalPayment, basket, paymentT
             else
                 TriggerClientEvent('ry-shops:notification', _source, noMoney)
             end
-
-        elseif paymentType == 'bank' then
-            playerMoney = xPlayer.getAccount('bank').money
-
-            if playerMoney >= totalPayment then 
-                xPlayer.removeAccountMoney('bank', totalCheckout)
-                for k,v in pairs(basket) do
-                    xPlayer.addInventoryItem(v.itemName, v.itemQuantity)
+        else
+            if paymentType == 'cash' then
+                playerMoney = xPlayer.getAccount('money').money
+                if playerMoney >= totalPayment then 
+                    xPlayer.removeMoney(totalPayment)
+                    for k,v in pairs(basket) do
+                        xPlayer.addInventoryItem(v.itemName, v.itemQuantity)
+                    end
+                    TriggerClientEvent('ry-shops:notification', _source, purchaseCompleted)
+                else
+                    TriggerClientEvent('ry-shops:notification', _source, noMoney)
                 end
-                TriggerClientEvent('ry-shops:notification', _source, purchaseCompleted)
-            else
-                TriggerClientEvent('ry-shops:notification', _source, noMoney)
+    
+            elseif paymentType == 'bank' then
+                playerMoney = xPlayer.getAccount('bank').money
+                if playerMoney >= totalPayment then 
+                    xPlayer.removeAccountMoney('bank', totalPayment)
+                    for k,v in pairs(basket) do
+                        xPlayer.addInventoryItem(v.itemName, v.itemQuantity)
+                    end
+                    TriggerClientEvent('ry-shops:notification', _source, purchaseCompleted)
+                else
+                    TriggerClientEvent('ry-shops:notification', _source, noMoney)
+                end
             end
         end
     elseif RY.Options.FrameWork == 'qb' then
         xPlayer = Framework.Functions.GetPlayer(_source)
-        if paymentType == 'cash' then
-            playerMoney = xPlayer.PlayerData.money["cash"]
-
-            if playerMoney >= totalPayment then 
-                xPlayer.Functions.RemoveMoney("cash", totalCheckout)
+        if useBlackMoney then
+            playerMoney = xPlayer.PlayerData.money[RY.Options.accountBlackMoney]
+            if playerMoney >= totalPayment then
+                Player.Functions.RemoveMoney(RY.Options.accountBlackMoney, totalPayment)
                 for k,v in pairs(basket) do
                     xPlayer.Functions.AddItem(v.itemName, v.itemQuantity)
                 end
@@ -60,17 +70,29 @@ AddEventHandler('ry-shops:goToCheckout', function(totalPayment, basket, paymentT
             else
                 TriggerClientEvent('ry-shops:notification', _source, noMoney)
             end
-        elseif paymentType == 'bank' then
-            playerMoney = xPlayer.PlayerData.money["bank"]
-
-            if playerMoney >= totalPayment then 
-                xPlayer.Functions.RemoveMoney("bank", totalCheckout)
-                for k,v in pairs(basket) do
-                    xPlayer.Functions.AddItem(v.itemName, v.itemQuantity)
+        else
+            if paymentType == 'cash' then
+                playerMoney = xPlayer.PlayerData.money["cash"]
+                if playerMoney >= totalPayment then 
+                    xPlayer.Functions.RemoveMoney("cash", totalPayment)
+                    for k,v in pairs(basket) do
+                        xPlayer.Functions.AddItem(v.itemName, v.itemQuantity)
+                    end
+                    TriggerClientEvent('ry-shops:notification', _source, purchaseCompleted)
+                else
+                    TriggerClientEvent('ry-shops:notification', _source, noMoney)
                 end
-                TriggerClientEvent('ry-shops:notification', _source, purchaseCompleted)
-            else
-                TriggerClientEvent('ry-shops:notification', _source, noMoney)
+            elseif paymentType == 'bank' then
+                playerMoney = xPlayer.PlayerData.money["bank"]
+                if playerMoney >= totalPayment then 
+                    xPlayer.Functions.RemoveMoney("bank", totalPayment)
+                    for k,v in pairs(basket) do
+                        xPlayer.Functions.AddItem(v.itemName, v.itemQuantity)
+                    end
+                    TriggerClientEvent('ry-shops:notification', _source, purchaseCompleted)
+                else
+                    TriggerClientEvent('ry-shops:notification', _source, noMoney)
+                end
             end
         end
     end

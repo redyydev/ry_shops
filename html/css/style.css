@@ -85,9 +85,6 @@ body, input, button {
   margin-left: 10px;
 }
 
-.shopContainer .shopHeader .shopHeader-Others .shopHeader-Others-BasketTotal .shopHeader-Others-BasketTotal-Others-Total {
-}
-
 .shopContainer .shopHeader .shopHeader-Others .shopHeader-Others-BasketTotal .shopHeader-Others-BasketTotal-Others .shopHeader-Others-BasketTotal-Others-Text {
   text-transform: uppercase;
   opacity: 0.5;

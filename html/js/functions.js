@@ -3,16 +3,19 @@ var cache = {
   shopItems: [],
   totalCheckout: 0,
   inCheckout: false,
-  paymentOption: null
+  paymentOption: null,
+  useBlackMoney: false,
 }
 
-function openMenu(shopItems, shopName, categorys) {
+function openMenu(shopItems, shopName, categorys, useBlackMoney) {
   $(".ui").fadeIn();
   $("#shopTitle").html(shopName)
 
   setupCategorys(categorys)
   setupShopItems(shopItems)
   setupSearch(shopItems)
+  
+  cache.useBlackMoney = useBlackMoney
 
   if (!cache.basket.length)
   $("#noProductsAdded").fadeIn()
@@ -104,18 +107,8 @@ function addtoBasket(shopItem) {
       <div class="basketItem-Image"><img src="assets/${shopItem.itemImage}"</div>
     </div>
     <div class="basketItem-header">${shopItem.itemLabel}<span id="basketItem-Quantity-${shopItem.itemID}" style="margin-left: 5px;">x${shopItem.itemQuantity}</span></div>
-    <div class="basketItem-footer"><span id="basketItem-Price-${shopItem.itemID}">${shopItem.itemTotal}$</span></div>
+    <div class="basketItem-footer"><span style="background: ${cache.useBlackMoney ? "rgba(255, 84, 84, 0.7)" : "rgba(56, 168, 5, 0.71)" }" id="basketItem-Price-${shopItem.itemID}">${shopItem.itemTotal}$</span></div>
     `)
-
-    //$("#basketItems").append(`
-    ///<div class="basketItem vov fade-in infinite" id="basketItem-${shopItem.itemID}">
-    //<div class="basketItem-Image">
-    //  <img src="assets/${shopItem.itemImage}"
-    //</div>
-    //<div class="basketItem-Footer">${shopItem.itemLabel}<span id="basketItem-Quantity-${shopItem.itemID}" style="margin-left: 5px;">x${shopItem.itemQuantity}</span></div>
-    //<div class="basketItem-Header"><span id="basketItem-Price-${shopItem.itemID}">${shopItem.itemTotal}$</span></div>
-    //</div>
-    //`)
 
     $(`#basketItem-${shopItem.itemID}`).click(function() {
       if (!cache.inCheckout) 
@@ -159,10 +152,16 @@ function proceedCheckout() {
 
       var date = Date.now()
 
-      $("#more-btns").append(`
-      <button class="shopButtonCheckout-Btn vov fade-in infinite" id="cash-${date}" style="width: 10%; height: 70px; display: none;"><i class="bi bi-cash-stack"  style="font-size: 1.7em;"></i></button>
-      <button class="shopButtonCheckout-Btn vov fade-in infinite" id="bank-${date}"" style="width: 10%; height: 70px; display: none;"><i class="bi bi-credit-card" style="font-size: 1.7em;"></i></button>
-      `)
+      if (cache.useBlackMoney) {
+        $("#more-btns").append(`
+        <button class="shopButtonCheckout-Btn vov fade-in infinite" id="blackmoney-${date}"" style="width: 10%; height: 70px; display: none;"><i class="bi bi-cash-stack" style="font-size: 1.7em; color: rgba(255, 84, 84, 0.7);"></i></button>
+        `)
+      } else {
+        $("#more-btns").append(`
+        <button class="shopButtonCheckout-Btn vov fade-in infinite" id="cash-${date}" style="width: 10%; height: 70px; display: none;"><i class="bi bi-cash-stack" style="font-size: 1.7em;"></i></button>
+        <button class="shopButtonCheckout-Btn vov fade-in infinite" id="bank-${date}"" style="width: 10%; height: 70px; display: none;"><i class="bi bi-credit-card" style="font-size: 1.7em;"></i></button>
+        `)
+      }
 
       $("#checkout").html('CANCEL')
   
@@ -173,6 +172,7 @@ function proceedCheckout() {
       
       $(`#cash-${date}`).show()
       $(`#bank-${date}`).show()
+      $(`#blackmoney-${date}`).show()
       
       $(`#cash-${date}`).click(function() {
         $.post(
@@ -180,7 +180,8 @@ function proceedCheckout() {
             JSON.stringify({
               totalPayment: cache.totalCheckout,
               basket: cache.basket,
-              paymentType: "cash"
+              paymentType: "cash",
+              useBlackMoney: cache.useBlackMoney
             })
         );
         closeMenu();
@@ -192,7 +193,21 @@ function proceedCheckout() {
           JSON.stringify({
             totalPayment: cache.totalCheckout,
             basket: cache.basket,
-            paymentType: "bank"
+            paymentType: "bank",
+            useBlackMoney: cache.useBlackMoney
+          })
+          );
+          closeMenu();
+        })
+      
+      $(`#blackmoney-${date}`).click(function() {
+        $.post(
+          "https://ry_shops/goToCheckout",
+          JSON.stringify({
+            totalPayment: cache.totalCheckout,
+            basket: cache.basket,
+            paymentType: "blackmoney",
+            useBlackMoney: cache.useBlackMoney
           })
           );
           closeMenu();
@@ -205,9 +220,6 @@ function proceedCheckout() {
       $("#shopCategorys").css("opacity", "1.0")
       $("#shopItems").css("opacity", "1.0")
       $("#basketItems").css("opacity", "1.0")
-
-      $(`#cash-${cache.totalCheckout}`).hide()
-      $(`#bank-${cache.totalCheckout}`).hide()
     }
   } else {
     $("#noProductsAdded-Text").css("color", "red")
