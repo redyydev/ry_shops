@@ -3,7 +3,7 @@ RY = {}
 RY.Options = {
     FrameWork = 'esx', -- esx or qb
     accountBlackMoney = 'black_money', -- account Name of Black Money
-    oxTarget = true, -- if false it will enable markers/3dtext
+    oxTarget = false, -- if false it will enable markers/3dtext
 }
 
 RY.Messages = {
@@ -56,9 +56,6 @@ RY.Locations = {
                 itemImage = "apple.png", -- image in html/assets
                 itemPrice = 5, -- item price
                 itemCategory = 'food', -- item category
-                -- IMAGE RESOLUTION --
-                -- 150x100 Pixels --
-                -- IMAGE RESOLUTION --
             },
             [2] = {
                 itemName = "kiwi",

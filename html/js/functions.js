@@ -103,7 +103,7 @@ function addtoBasket(shopItem) {
     })
 
     $("#basketItems").append(`
-    <div class="basketItem vov fade-in infinite" id="basketItem-${shopItem.itemID}">
+    <div class="basketItem vov slide-in-up infinite" id="basketItem-${shopItem.itemID}">
       <div class="basketItem-Image"><img src="assets/${shopItem.itemImage}"</div>
     </div>
     <div class="basketItem-header">${shopItem.itemLabel}<span id="basketItem-Quantity-${shopItem.itemID}" style="margin-left: 5px;">x${shopItem.itemQuantity}</span></div>
@@ -154,12 +154,12 @@ function proceedCheckout() {
 
       if (cache.useBlackMoney) {
         $("#more-btns").append(`
-        <button class="shopButtonCheckout-Btn vov fade-in infinite" id="blackmoney-${date}"" style="width: 10%; height: 70px; display: none;"><i class="bi bi-cash-stack" style="font-size: 1.7em; color: rgba(255, 84, 84, 0.7);"></i></button>
+        <button class="shopButtonCheckout-Btn vov slide-in-left infinite" id="blackmoney-${date}"" style="width: 10%; height: 70px; display: none;"><i class="bi bi-cash-stack" style="font-size: 1.7em; color: rgba(255, 84, 84, 0.7);"></i></button>
         `)
       } else {
         $("#more-btns").append(`
-        <button class="shopButtonCheckout-Btn vov fade-in infinite" id="cash-${date}" style="width: 10%; height: 70px; display: none;"><i class="bi bi-cash-stack" style="font-size: 1.7em;"></i></button>
-        <button class="shopButtonCheckout-Btn vov fade-in infinite" id="bank-${date}"" style="width: 10%; height: 70px; display: none;"><i class="bi bi-credit-card" style="font-size: 1.7em;"></i></button>
+        <button class="shopButtonCheckout-Btn vov slide-in-left infinite" id="cash-${date}" style="width: 10%; height: 70px; display: none;"><i class="bi bi-cash-stack" style="font-size: 1.7em;"></i></button>
+        <button class="shopButtonCheckout-Btn vov slide-in-left infinite" id="bank-${date}"" style="width: 10%; height: 70px; display: none;"><i class="bi bi-credit-card" style="font-size: 1.7em;"></i></button>
         `)
       }
 
