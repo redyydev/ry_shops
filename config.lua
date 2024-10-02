@@ -98,7 +98,7 @@ RY.Locations = {
         -- Markers
         markersConfig = {
             markerMenu = {
-                useKey = 38, -- E
+                useKey = 38, 
                 markerType = 2,
                 markerSize  = {x = 0.3, y = 0.3, z = 0.3}, 
                 markerColor = {r = 255, g = 255, b = 255},
