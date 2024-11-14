@@ -47,9 +47,9 @@ AddEventHandler('ry-shops:goToCheckout', function(totalPayment, basket, paymentT
             end
         elseif RY.Options.FrameWork == 'qb' then
             if useBlackMoney then
-                playerMoney = xPlayer.PlayerData.money["black"]
+                playerMoney = xPlayer.PlayerData.money[RY.Options.accountBlackMoney]
                 if playerMoney >= totalPayment then
-                    xPlayer.Functions.RemoveMoney("black", totalPayment)
+                    xPlayer.Functions.RemoveMoney(RY.Options.accountBlackMoney, totalPayment)
                     paymentSuccess = true
                 end
             else
