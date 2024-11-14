@@ -1,7 +1,8 @@
-Framework = nil
+local Framework = nil
+local purchaseLocks = {}
 
 if RY.Options.FrameWork == 'esx' then
-    Framework = exports['es_extended']:getSharedObject()   
+    Framework = exports['es_extended']:getSharedObject()  
 elseif RY.Options.FrameWork == 'qb' then
     Framework = exports['qb-core']:GetCoreObject()
 end
@@ -9,93 +10,69 @@ end
 RegisterServerEvent('ry-shops:goToCheckout')
 AddEventHandler('ry-shops:goToCheckout', function(totalPayment, basket, paymentType, useBlackMoney)
     local _source = source
-    local xPlayer = nil
-    local playerMoney = 0
+    
+    if purchaseLocks[_source] then
+        return
+    end
 
-    local purchaseCompleted = RY.Messages.purchaseCompleted
-    purchaseCompleted = string.gsub(purchaseCompleted, "%%total%%", totalPayment)
+    purchaseLocks[_source] = true
 
-    local noMoney = RY.Messages.noMoney
-    noMoney = string.gsub(noMoney, "%%total%%", totalPayment)
+    local function payAndGiveItem(xPlayer, totalPayment, basket, paymentType, useBlackMoney)
+        local playerMoney = 0
+        local purchaseCompleted = string.gsub(RY.Messages.purchaseCompleted, "%%total%%", totalPayment)
+        local noMoney = string.gsub(RY.Messages.noMoney, "%%total%%", totalPayment)
 
-    if RY.Options.FrameWork == 'esx' then
-        xPlayer = Framework.GetPlayerFromId(_source)
+        local paymentSuccess = false
+
         if useBlackMoney then
             playerMoney = xPlayer.getAccount(RY.Options.accountBlackMoney).money
             if playerMoney >= totalPayment then
                 xPlayer.removeAccountMoney(RY.Options.accountBlackMoney, totalPayment)
-                for k,v in pairs(basket) do
-                    xPlayer.addInventoryItem(v.itemName, v.itemQuantity)
-                end
-                TriggerClientEvent('ry-shops:notification', _source, purchaseCompleted)
-            else
-                TriggerClientEvent('ry-shops:notification', _source, noMoney)
+                paymentSuccess = true
             end
         else
             if paymentType == 'cash' then
                 playerMoney = xPlayer.getAccount('money').money
-                if playerMoney >= totalPayment then 
+                if playerMoney >= totalPayment then
                     xPlayer.removeMoney(totalPayment)
-                    for k,v in pairs(basket) do
-                        xPlayer.addInventoryItem(v.itemName, v.itemQuantity)
-                    end
-                    TriggerClientEvent('ry-shops:notification', _source, purchaseCompleted)
-                else
-                    TriggerClientEvent('ry-shops:notification', _source, noMoney)
+                    paymentSuccess = true
                 end
-    
             elseif paymentType == 'bank' then
                 playerMoney = xPlayer.getAccount('bank').money
-                if playerMoney >= totalPayment then 
+                if playerMoney >= totalPayment then
                     xPlayer.removeAccountMoney('bank', totalPayment)
-                    for k,v in pairs(basket) do
-                        xPlayer.addInventoryItem(v.itemName, v.itemQuantity)
-                    end
-                    TriggerClientEvent('ry-shops:notification', _source, purchaseCompleted)
-                else
-                    TriggerClientEvent('ry-shops:notification', _source, noMoney)
+                    paymentSuccess = true
                 end
             end
         end
-    elseif RY.Options.FrameWork == 'qb' then
-        xPlayer = Framework.Functions.GetPlayer(_source)
-        if useBlackMoney then
-            playerMoney = xPlayer.PlayerData.money[RY.Options.accountBlackMoney]
-            if playerMoney >= totalPayment then
-                Player.Functions.RemoveMoney(RY.Options.accountBlackMoney, totalPayment)
-                for k,v in pairs(basket) do
-                    xPlayer.Functions.AddItem(v.itemName, v.itemQuantity)
-                end
-                TriggerClientEvent('ry-shops:notification', _source, purchaseCompleted)
-            else
-                TriggerClientEvent('ry-shops:notification', _source, noMoney)
+
+        if paymentSuccess then
+            for _, item in pairs(basket) do
+                xPlayer.addInventoryItem(item.itemName, item.itemQuantity)
             end
+            TriggerClientEvent('ry-shops:notification', _source, purchaseCompleted)
         else
-            if paymentType == 'cash' then
-                playerMoney = xPlayer.PlayerData.money["cash"]
-                if playerMoney >= totalPayment then 
-                    xPlayer.Functions.RemoveMoney("cash", totalPayment)
-                    for k,v in pairs(basket) do
-                        xPlayer.Functions.AddItem(v.itemName, v.itemQuantity)
-                    end
-                    TriggerClientEvent('ry-shops:notification', _source, purchaseCompleted)
-                else
-                    TriggerClientEvent('ry-shops:notification', _source, noMoney)
-                end
-            elseif paymentType == 'bank' then
-                playerMoney = xPlayer.PlayerData.money["bank"]
-                if playerMoney >= totalPayment then 
-                    xPlayer.Functions.RemoveMoney("bank", totalPayment)
-                    for k,v in pairs(basket) do
-                        xPlayer.Functions.AddItem(v.itemName, v.itemQuantity)
-                    end
-                    TriggerClientEvent('ry-shops:notification', _source, purchaseCompleted)
-                else
-                    TriggerClientEvent('ry-shops:notification', _source, noMoney)
-                end
-            end
+            TriggerClientEvent('ry-shops:notification', _source, noMoney)
         end
     end
+
+    local xPlayer
+    if RY.Options.FrameWork == 'esx' then
+        xPlayer = Framework.GetPlayerFromId(_source)
+    elseif RY.Options.FrameWork == 'qb' then
+        xPlayer = Framework.Functions.GetPlayer(_source)
+    end
+
+    if xPlayer then
+        payAndGiveItem(xPlayer, totalPayment, basket, paymentType, useBlackMoney)
+    end
+
+    Citizen.SetTimeout(1000, function()
+        purchaseLocks[_source] = nil
+    end)
 end)
 
-
+AddEventHandler('playerDropped', function()
+    local _source = source
+    purchaseLocks[_source] = nil
+end)

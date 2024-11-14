@@ -28,20 +28,6 @@ function goToCheckout(totalPayment, basket, paymentType, useBlackMoney)
 	TriggerServerEvent('ry-shops:goToCheckout', totalPayment, basket, paymentType, useBlackMoney)
 end
 
-function notification(msg, type)
-    if RY.Options.FrameWork == 'esx' then
-        Framework.ShowNotification(msg) -- Default ESX notification
-    elseif RY.Options.FrameWork == 'qb' then
-        Framework.Functions.Notify(msg) -- Default QB notification
-    end
-
-    --[[ TriggerEvent('mythic_notify:client:SendAlert', {							example mythic notification
-    	type = type,
-    	text = msg,
-    	length = 7500
-     })]]--
-end
-
 function closeMenu()
 	TriggerScreenblurFadeOut(1000)
 	SendNUIMessage({action = "closeMenu"})
