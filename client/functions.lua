@@ -43,48 +43,6 @@ function closeMenu()
 	InMenu = false
 end
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 function DrawText3D(x, y, z, text)
 	local px, py, pz = table.unpack(GetEntityCoords(PlayerPedId()))
 
