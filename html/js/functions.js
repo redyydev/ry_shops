@@ -57,7 +57,7 @@ function setupShopItems(shopItems) {
           <div class="shopItem-Image">
             <img src="assets/${shopItem.itemImage}" />
           </div>
-          <div class="shopItem-Footer">${shopItem.itemLabel}</div>
+          <div class="shopItem-Footer" style="margin-left: 40px; margin-top: 35px">${shopItem.itemLabel}</div>
         </div>
       `);
 
