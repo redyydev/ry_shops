@@ -15,7 +15,10 @@ RY.Locations = {
     ['shop1'] = {
         shopName = 'SUPER MARKET',
         useBlackMoney = false, -- if true player have to pay with black money.
-        menuCoords = vector3(25.63,-1347.48,29.48),
+        menuCoords = {
+            vector3(25.63,-1347.48,29.48),
+            --vector3(373.875,-1602.753,29.291), example
+        },
 
         -- Categorys
         categorysConfig = {'food', 'electronics', 'utilities'},

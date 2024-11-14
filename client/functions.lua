@@ -1,27 +1,34 @@
 local shopItems = {}
 
 function openMenu(lastLocation)
-	cache.lastLocation = lastLocation
-	
-	shopItems = {}
-	for k,v in pairs(RY.Locations[cache.lastLocation].shopItems) do
-		table.insert(shopItems, {
-			itemID = k,
-			itemName = v.itemName,
-			itemLabel = v.itemLabel,
-			itemImage = v.itemImage,
-			itemPrice = v.itemPrice,
-			itemCategory = v.itemCategory,
-			itemQuantity = 1,
-			itemTotal = v.itemPrice
-		})
-	end
+    cache.lastLocation = lastLocation
+   
+    shopItems = {}
+    for k,v in pairs(RY.Locations[cache.lastLocation].shopItems) do
+        table.insert(shopItems, {
+            itemID = k,
+            itemName = v.itemName,
+            itemLabel = v.itemLabel,
+            itemImage = v.itemImage,
+            itemPrice = v.itemPrice,
+            itemCategory = v.itemCategory,
+            itemQuantity = 1,
+            itemTotal = v.itemPrice
+        })
+    end
 
-	TriggerScreenblurFadeIn(1)
-	SendNUIMessage({action = 'openMenu', data = { shopItems = shopItems, shopName = RY.Locations[cache.lastLocation].shopName, categorys = RY.Locations[cache.lastLocation].categorysConfig, useBlackMoney = RY.Locations[cache.lastLocation].useBlackMoney }})
-	SetNuiFocus(true, true)
-
-	InMenu = true
+    TriggerScreenblurFadeIn(1)
+    SendNUIMessage({
+        action = 'openMenu', 
+        data = { 
+            shopItems = shopItems, 
+            shopName = RY.Locations[cache.lastLocation].shopName, 
+            categorys = RY.Locations[cache.lastLocation].categorysConfig, 
+            useBlackMoney = RY.Locations[cache.lastLocation].useBlackMoney 
+        }
+    })
+    SetNuiFocus(true, true)
+    InMenu = true
 end
 
 function goToCheckout(totalPayment, basket, paymentType, useBlackMoney) 
