@@ -2,8 +2,8 @@
 A fully configurable store system with a modern and simple design.
 With the ease of creating infinite stores each with different items.
 
-![alt text](![549038632d0ed0f0cf02b1136a6770674d801341_2_668x499](https://github.com/user-attachments/assets/248c681d-c2c6-4a3d-a49b-6a101a872129)
-)
+![549038632d0ed0f0cf02b1136a6770674d801341_2_668x499](https://github.com/user-attachments/assets/d03f5376-27ac-4f1c-ad1b-a153cf0d2115)
+
 
 **IMPORTANT**
 
