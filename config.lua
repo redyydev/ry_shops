@@ -16,8 +16,14 @@ RY.Locations = {
         shopName = 'SUPER MARKET',
         useBlackMoney = false, -- if true player have to pay with black money.
         menuCoords = {
-            vector3(25.63,-1347.48,29.48),
-            --vector3(373.875,-1602.753,29.291), example
+			vector3(373.8, 325.8, 103.5),
+			vector3(2557.4, 382.2, 108.6),
+			vector3(-3038.9, 585.9, 7.9),
+			vector3(-3241.9, 1001.4, 12.8),
+			vector3(547.4, 2671.7, 42.1),
+			vector3(1961.4, 3740.6, 32.3),
+			vector3(2678.9, 3280.6, 55.2),
+			vector3(1729.2, 6414.1, 35.0)
         },
 
         -- Categorys
@@ -87,7 +93,10 @@ RY.Locations = {
     ['blackmarket'] = {
         shopName = 'BLACK MARKET',
         useBlackMoney = true,
-        menuCoords = vector3(-1.8970, -1400.0311, 29.2717),
+        menuCoords = {
+            vector3(-1.8970, -1400.0311, 29.2717),
+            -- more ify you want
+        },
 
         -- Categorys
         categorysConfig = {'ilegal'},
