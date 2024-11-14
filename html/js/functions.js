@@ -43,6 +43,30 @@ function setupCategories(categories) {
   });
 }
 
+function searchByCategory(category) {
+  $(".shopCategory").removeClass("active");
+  
+  $(`#category-${category}`).addClass("active");
+
+  cache.shopItems.forEach((shopItem) => {
+      const shopItemElement = $(`#shopItem-${shopItem.itemID}`);
+      
+      if (shopItem.itemCategory === category) {
+          shopItemElement.show();
+      } else {
+          shopItemElement.hide();
+      }
+  });
+}
+
+function resetCategory() {
+  $(".shopCategory").removeClass("active");
+  $("#category-all").addClass("active");
+  cache.shopItems.forEach((shopItem) => {
+      $(`#shopItem-${shopItem.itemID}`).show();
+  });
+}
+
 function setupShopItems(shopItems) {
   const shopItemsContainer = $("#shopItems");
   shopItemsContainer.html("");
