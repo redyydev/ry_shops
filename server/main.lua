@@ -10,7 +10,7 @@ end
 RegisterServerEvent('ry-shops:goToCheckout')
 AddEventHandler('ry-shops:goToCheckout', function(totalPayment, basket, paymentType, useBlackMoney)
     local _source = source
-    
+   
     if purchaseLocks[_source] then
         return
     end
@@ -21,34 +21,63 @@ AddEventHandler('ry-shops:goToCheckout', function(totalPayment, basket, paymentT
         local playerMoney = 0
         local purchaseCompleted = string.gsub(RY.Messages.purchaseCompleted, "%%total%%", totalPayment)
         local noMoney = string.gsub(RY.Messages.noMoney, "%%total%%", totalPayment)
-
         local paymentSuccess = false
 
-        if useBlackMoney then
-            playerMoney = xPlayer.getAccount(RY.Options.accountBlackMoney).money
-            if playerMoney >= totalPayment then
-                xPlayer.removeAccountMoney(RY.Options.accountBlackMoney, totalPayment)
-                paymentSuccess = true
-            end
-        else
-            if paymentType == 'cash' then
-                playerMoney = xPlayer.getAccount('money').money
+        if RY.Options.FrameWork == 'esx' then
+            if useBlackMoney then
+                playerMoney = xPlayer.getAccount(RY.Options.accountBlackMoney).money
                 if playerMoney >= totalPayment then
-                    xPlayer.removeMoney(totalPayment)
+                    xPlayer.removeAccountMoney(RY.Options.accountBlackMoney, totalPayment)
                     paymentSuccess = true
                 end
-            elseif paymentType == 'bank' then
-                playerMoney = xPlayer.getAccount('bank').money
+            else
+                if paymentType == 'cash' then
+                    playerMoney = xPlayer.getAccount('money').money
+                    if playerMoney >= totalPayment then
+                        xPlayer.removeMoney(totalPayment)
+                        paymentSuccess = true
+                    end
+                elseif paymentType == 'bank' then
+                    playerMoney = xPlayer.getAccount('bank').money
+                    if playerMoney >= totalPayment then
+                        xPlayer.removeAccountMoney('bank', totalPayment)
+                        paymentSuccess = true
+                    end
+                end
+            end
+        elseif RY.Options.FrameWork == 'qb' then
+            if useBlackMoney then
+                playerMoney = xPlayer.PlayerData.money["black"]
                 if playerMoney >= totalPayment then
-                    xPlayer.removeAccountMoney('bank', totalPayment)
+                    xPlayer.Functions.RemoveMoney("black", totalPayment)
                     paymentSuccess = true
+                end
+            else
+                if paymentType == 'cash' then
+                    playerMoney = xPlayer.PlayerData.money["cash"]
+                    if playerMoney >= totalPayment then
+                        xPlayer.Functions.RemoveMoney("cash", totalPayment)
+                        paymentSuccess = true
+                    end
+                elseif paymentType == 'bank' then
+                    playerMoney = xPlayer.PlayerData.money["bank"]
+                    if playerMoney >= totalPayment then
+                        xPlayer.Functions.RemoveMoney("bank", totalPayment)
+                        paymentSuccess = true
+                    end
                 end
             end
         end
 
         if paymentSuccess then
-            for _, item in pairs(basket) do
-                xPlayer.addInventoryItem(item.itemName, item.itemQuantity)
+            if RY.Options.FrameWork == 'esx' then
+                for _, item in pairs(basket) do
+                    xPlayer.addInventoryItem(item.itemName, item.itemQuantity)
+                end
+            elseif RY.Options.FrameWork == 'qb' then
+                for _, item in pairs(basket) do
+                    xPlayer.Functions.AddItem(item.itemName, item.itemQuantity)
+                end
             end
             TriggerClientEvent('ry-shops:notification', _source, purchaseCompleted)
         else
