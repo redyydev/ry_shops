@@ -1,57 +1,57 @@
 RY = {}
 
+-- Configuration options for the shop framework and settings
 RY.Options = {
-    FrameWork = 'esx', -- esx or qb
-    accountBlackMoney = 'black_money', -- account Name of Black Money
-    oxTarget = false,
+    FrameWork = 'esx', -- Choose between 'esx' or 'qb' framework
+    accountBlackMoney = 'black_money', -- Account name for black money transactions
+    oxTarget = false, -- Enable or disable oxTarget integration
 }
 
+-- Messages for notifications
 RY.Messages = {
     purchaseCompleted = "Successfully Purchased (-%total%$), thank you!",
-    noMoney = "You don't have enought money (You need %total%$)"
+    noMoney = "You don't have enough money (You need %total%$)"
 }
 
+-- Shop locations and configurations
 RY.Locations = {
     ['shop1'] = {
         shopName = 'SUPER MARKET',
-        useBlackMoney = false, -- if true player have to pay with black money.
+        useBlackMoney = false, -- Payment with black money is disabled
         jobRestrictions = {
-            enabled = false, -- Set to true to enable job restrictions
-            jobs = {} -- Empty table means all jobs can access
+            enabled = false, -- Job restrictions are not enabled
+            jobs = {} -- All jobs can access
         },
 
+        
         menuCoords = {
-			vector3(373.8, 325.8, 103.5),
-			vector3(2557.4, 382.2, 108.6),
-			vector3(-3038.9, 585.9, 7.9),
-			vector3(-3241.9, 1001.4, 12.8),
-			vector3(547.4, 2671.7, 42.1),
-			vector3(1961.4, 3740.6, 32.3),
-			vector3(2678.9, 3280.6, 55.2),
-			vector3(1729.2, 6414.1, 35.0)
+            vector3(373.8, 325.8, 103.5),
+            vector3(2557.4, 382.2, 108.6),
+            vector3(-3038.9, 585.9, 7.9),
+            vector3(-3241.9, 1001.4, 12.8),
+            vector3(547.4, 2671.7, 42.1),
+            vector3(1961.4, 3740.6, 32.3),
+            vector3(2678.9, 3280.6, 55.2),
+            vector3(1729.2, 6414.1, 35.0)
         },
 
-        -- Categorys
         categorysConfig = {'food', 'electronics', 'utilities'},
 
-        -- OxTarget
         oxTargetConfig = {
             icon = 'fa-solid fa-cube',
             label = 'Shop',
         },
 
-        -- Markers
         markersConfig = {
             markerMenu = {
-                useKey = 38, -- E
+                useKey = 38, -- Key to open the menu (E)
                 markerType = 2,
-                markerSize  = {x = 0.3, y = 0.3, z = 0.3}, 
+                markerSize = {x = 0.3, y = 0.3, z = 0.3},
                 markerColor = {r = 255, g = 255, b = 255},
                 markerText = '[ ~g~E~w~ ] Shop'
             },
         },
 
-        -- Blips
         blipsConfig = {
             blipMenu = {
                 blipName = '24/7 Shop',
@@ -62,14 +62,13 @@ RY.Locations = {
             },
         },
 
-        -- Shop Items
         shopItems = {
             [1] = {
-                itemName = "apple", -- item name in Database
-                itemLabel = "Apple", -- item lable to display in UI
-                itemImage = "apple.png", -- image in html/assets
-                itemPrice = 5, -- item price
-                itemCategory = 'food', -- item category
+                itemName = "apple", -- Item name in the database
+                itemLabel = "Apple", -- Display label in UI
+                itemImage = "apple.png", -- Image in html/assets
+                itemPrice = 5, -- Item price
+                itemCategory = 'food', -- Item category
             },
             [2] = {
                 itemName = "kiwi",
@@ -97,42 +96,36 @@ RY.Locations = {
 
     ['blackmarket'] = {
         shopName = 'BLACK MARKET',
-        useBlackMoney = true,
+        useBlackMoney = true, -- Payment with black money is enabled
         jobRestrictions = {
-            enabled = true, -- Enable job restrictions
+            enabled = true, -- Job restrictions are enabled
             jobs = {
                 ['police'] = true,
                 ['mechanic'] = true
-                -- Add more jobs as needed
             }
         },
         
         menuCoords = {
             vector3(-1.8970, -1400.0311, 29.2717),
-            -- more ify you want
         },
 
-        -- Categorys
         categorysConfig = {'ilegal'},
 
-        -- OxTarget
         oxTargetConfig = {
             icon = 'fa-solid fa-cube',
             label = 'Black Market',
         },
 
-        -- Markers
         markersConfig = {
             markerMenu = {
                 useKey = 38, 
                 markerType = 2,
-                markerSize  = {x = 0.3, y = 0.3, z = 0.3}, 
+                markerSize = {x = 0.3, y = 0.3, z = 0.3},
                 markerColor = {r = 255, g = 255, b = 255},
                 markerText = '[ ~g~E~w~ ] BLACK MARKET'
             },
         },
 
-        -- Blips
         blipsConfig = {
             blipMenu = {
                 blipName = 'BLACK MARKET',
@@ -143,12 +136,11 @@ RY.Locations = {
             },
         },
 
-        -- Shop Items
         shopItems = {
             [1] = {
-                itemName = "radio", 
-                itemLabel = "Radio", 
-                itemImage = "radio.png", 
+                itemName = "radio",
+                itemLabel = "Radio",
+                itemImage = "radio.png",
                 itemPrice = 250,
                 itemCategory = 'ilegal',
             },
@@ -156,16 +148,18 @@ RY.Locations = {
     },
 }
 
+-- Function to send notifications based on the framework
 function notification(msg, type)
     if RY.Options.FrameWork == 'esx' then
-        Framework.ShowNotification(msg) -- Default ESX notification
+        Framework.ShowNotification(msg) -- ESX notification
     elseif RY.Options.FrameWork == 'qb' then
-        Framework.Functions.Notify(msg) -- Default QB notification
+        Framework.Functions.Notify(msg) -- QB notification
     end
-
-    --[[ TriggerEvent('mythic_notify:client:SendAlert', {							example mythic notification
-    	type = type,
-    	text = msg,
-    	length = 7500
-     })]]--
+    -- Example custom notification
+    --[[ TriggerEvent('mythic_notify:client:SendAlert', {
+        type = type,
+        text = msg,
+        length = 7500
+    })]]--
 end
+
