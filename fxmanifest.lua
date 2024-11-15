@@ -9,8 +9,8 @@ lua54 'yes'
 ui_page {'html/index.html'}
 
 client_script {
-    'client/main.lua',
     'client/functions.lua',
+    'client/main.lua',
     'client/events.lua',
 }
 
