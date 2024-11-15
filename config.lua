@@ -3,7 +3,7 @@ RY = {}
 RY.Options = {
     FrameWork = 'esx', -- esx or qb
     accountBlackMoney = 'black_money', -- account Name of Black Money
-    oxTarget = false, -- if false it will enable markers/3dtext
+    oxTarget = false,
 }
 
 RY.Messages = {
@@ -15,6 +15,11 @@ RY.Locations = {
     ['shop1'] = {
         shopName = 'SUPER MARKET',
         useBlackMoney = false, -- if true player have to pay with black money.
+        jobRestrictions = {
+            enabled = false, -- Set to true to enable job restrictions
+            jobs = {} -- Empty table means all jobs can access
+        },
+
         menuCoords = {
 			vector3(373.8, 325.8, 103.5),
 			vector3(2557.4, 382.2, 108.6),
@@ -93,6 +98,15 @@ RY.Locations = {
     ['blackmarket'] = {
         shopName = 'BLACK MARKET',
         useBlackMoney = true,
+        jobRestrictions = {
+            enabled = true, -- Enable job restrictions
+            jobs = {
+                ['police'] = true,
+                ['mechanic'] = true
+                -- Add more jobs as needed
+            }
+        },
+        
         menuCoords = {
             vector3(-1.8970, -1400.0311, 29.2717),
             -- more ify you want
