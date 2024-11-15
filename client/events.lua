@@ -11,12 +11,6 @@ RegisterNUICallback("goToCheckout",function(data)
     goToCheckout(data.totalPayment, data.basket, data.paymentType, data.useBlackMoney)
 end)
 
-RegisterNetEvent('ry-shops:openMenu')
-AddEventHandler('ry-shops:openMenu', function(data)
-    local location = data.shopType or data.args.location
-    openMenu(location)
-end)
-
 RegisterNUICallback("CloseMenu",function()
     closeMenu()
 end)
