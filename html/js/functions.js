@@ -457,7 +457,7 @@ function clearBasket() {
  */
 function closeMenu() {
   // Notify the server that the menu was closed.
-  $.post("http://ry_shops/CloseMenu", JSON.stringify({}));
+  $.post(`http://${GetParentResourceName()}/CloseMenu`, JSON.stringify({}));
 
   // Reset the state of the shop.
   cache.basket = []; // empty the basket
