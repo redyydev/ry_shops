@@ -231,23 +231,27 @@ function appendBasketItemUI(shopItem) {
  * Removes all items of a given shop item from the basket.
  * @function removeFromBasketCompletamente
  * @param {object} shopItem - The shop item to remove.
+ *
+ * This function removes all items of the given shop item from the basket.
+ * It also updates the total checkout price and removes the item from the UI.
  */
 function removeFromBasketCompletamente(shopItem) {
-  // Encontra o item no carrinho
+  // Find the item in the basket
   const basketItem = cache.basket.find(item => item.itemID === shopItem.itemID);
 
   if (basketItem) {
-    // Remove o valor total desse item do total geral
+    // Update the total checkout price
     updateTotalCheckout(-basketItem.itemTotal);
 
-    // Remove o item do carrinho
+    // Remove the item from the basket
     cache.basket = cache.basket.filter(item => item.itemID !== shopItem.itemID);
 
-    // Remove o elemento do HTML
+    // Remove the item from the UI
     $(`#basketItem-${shopItem.itemID}`).remove();
 
-    // Se o carrinho estiver vazio, exibe a mensagem "No products added"
+    // Check if the basket is empty
     if (cache.basket.length === 0) {
+      // Show the "No products added" message
       $("#noProductsAdded").fadeIn();
     }
   }
