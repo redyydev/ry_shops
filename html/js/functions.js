@@ -392,7 +392,7 @@ function submitCheckout(paymentType) {
   if (checkoutSent) return;
   checkoutSent = true;
 
-  $.post("https://ry_shops/goToCheckout", JSON.stringify({
+  $.post(`http://${GetParentResourceName()}/goToCheckout`, JSON.stringify({
     // Total amount to be paid
     totalPayment: cache.totalCheckout,
     // Items in the basket
