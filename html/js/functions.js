@@ -233,16 +233,23 @@ function appendBasketItemUI(shopItem) {
  * @param {object} shopItem - The shop item to remove.
  */
 function removeFromBasketCompletamente(shopItem) {
-  // Remove all items of the shop item from the basket
-  cache.basket = cache.basket.filter(item => item.itemID !== shopItem.itemID);
-  // Remove the item from the UI
-  $(`#basketItem-${shopItem.itemID}`).remove();
-  // Update the total checkout amount
-  updateTotalCheckout(-shopItem.itemTotal);
+  // Encontra o item no carrinho
+  const basketItem = cache.basket.find(item => item.itemID === shopItem.itemID);
 
-  // If the total checkout amount is 0, show the "No products added" message
-  if (cache.totalCheckout === 0) {
-    $("#noProductsAdded").fadeIn();
+  if (basketItem) {
+    // Remove o valor total desse item do total geral
+    updateTotalCheckout(-basketItem.itemTotal);
+
+    // Remove o item do carrinho
+    cache.basket = cache.basket.filter(item => item.itemID !== shopItem.itemID);
+
+    // Remove o elemento do HTML
+    $(`#basketItem-${shopItem.itemID}`).remove();
+
+    // Se o carrinho estiver vazio, exibe a mensagem "No products added"
+    if (cache.basket.length === 0) {
+      $("#noProductsAdded").fadeIn();
+    }
   }
 }
 
