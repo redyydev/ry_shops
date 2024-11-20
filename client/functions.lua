@@ -68,12 +68,21 @@ end
 -- Returns the player's current job name
 -- @return string The player's current job name
 function GetPlayerJob()
-    -- If the framework is ESX, return the player's job name from the ESX player data
-    if RY.Options.FrameWork == 'esx' then
-        return Framework.GetPlayerData().job.name
-    -- If the framework is QBCore, return the player's job name from the QBCore player data
-    elseif RY.Options.FrameWork == 'qb' then
-        return Framework.Functions.GetPlayerData().job.name
+    -- Check if the framework is set and handle potential null references
+    if RY.Options.FrameWork then
+        -- If the framework is ESX, return the player's job name from the ESX player data
+        if RY.Options.FrameWork == 'esx' then
+            local playerData = Framework.GetPlayerData()
+            if playerData and playerData.job then
+                return playerData.job.name
+            end
+        -- If the framework is QBCore, return the player's job name from the QBCore player data
+        elseif RY.Options.FrameWork == 'qb' then
+            local playerData = Framework.Functions.GetPlayerData()
+            if playerData and playerData.job then
+                return playerData.job.name
+            end
+        end
     end
 end
 
